@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+    <typeAliases>
+        <package name="com.atyian.crm.model"/>
+    </typeAliases>
+    <!--当页面数据不刷新时，一定要引入分页插件-->
+    <plugins>
+        <!--设置分页插件-->
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <!--分页参数合理化-->
+            <property name="reasonable" value="true"/>
+        </plugin>
+    </plugins>
+    <mappers>
+        <package name="com.atyian.crm.mapper"/>
+    </mappers>
+</configuration>
