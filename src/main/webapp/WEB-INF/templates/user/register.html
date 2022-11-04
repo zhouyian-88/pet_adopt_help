@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登入</title>
+</head>
+<div th:replace="~{user/common :: #common_css}"></div>
+<!-- 页面样式 -->
+<link rel="stylesheet" th:href="@{css/user/register.css}">
+
+<body>
+    <div class="container-fluid">
+        <div class="row justify-content-center align-items-center mt-5">
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h2>宠物收养救助中心</h2>
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputNickname">账号</label>
+                                    <input type="text" class="form-control" id="inputNickname">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputPassword">密码</label>
+                                    <input type="password" class="form-control" id="inputPassword">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputName">真实姓名</label>
+                                    <input type="text" class="form-control" id="inputName">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputSex">性别</label>
+                                    <input type="text" class="form-control" id="inputSex">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputAge">年龄</label>
+                                    <input type="text" class="form-control" id="inputAge">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputPhone">联系方式</label>
+                                    <input type="text" class="form-control" id="inputPhone">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputBirthday">生日</label>
+                                    <input type="date" class="form-control" id="inputBirthday">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputRemark">备注</label>
+                                    <input type="text" class="form-control" id="inputRemark">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputAddress">地址</label>
+                                <input type="text" class="form-control" id="inputAddress" placeholder="">
+                            </div>
+                            <div class="row justify-content-center">
+                                <button type="submit" class="btn btn-primary  w-50">注册</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<!-- 引入js文件 -->
+<div th:replace="user/common :: #common_script"></div>
+
+</html>

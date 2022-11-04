@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>宠物救助的详细信息</title>
+</head>
+<div th:replace="~{user/common :: #common_css}"></div>
+<!-- 页面样式 -->
+<link rel="stylesheet" th:href="@{css/user/adopt_detail.css}">
+
+<body>
+    <!-- 头部开始 -->
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1>救助信息</h1>
+                </div>
+                <div class="col-12">
+                    <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img th:src="@{image/cat.jpg}" class="d-block w-100" style="max-height: 600px;" alt="...">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- 头部结束 -->
+
+    <!-- 主体部分开始 -->
+    <section>
+        <div class="container">
+
+
+            <div class="row">
+                <div class="col-4">
+                    <h3>时间</h3>
+                    <p>2022-11-2</p>
+                </div>
+                <div class="col-4">
+                    <h3>地点</h3>
+                    <p>井冈山</p>
+                </div>
+                <div class="col-4">
+                    <h3>情况</h3>
+                    <p>有一只小猫在xxxxxxxxxxxx</p>
+                </div>
+
+                <div class="col-4">
+                    <h3>备注</h3>
+                    <p>大家好，我是Vito。Vito是一只精力充沛的猫，比起其他猫更加热爱玩耍。。你能带我回家吗？</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">想要领养</button> -->
+                    <a type="button" href="pet_help.html" class="btn btn-primary">返回中心</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- 主体部分结束 -->
+
+    <section class="mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="comment-list">
+                    <div class="comment-info">
+                        <header><img th:src="@{image/OIP-C.jfif}" class="rounded-circle" style="max-width: 70px;"></header>
+                        <div class="comment-right">
+                            <h4>张三丰</h4>
+                            <div class="comment-content-header"><span><i class="glyphicon glyphicon-time"></i>2019-08-16</span></div>
+                            <p class="content">这条猫不错！</p>
+                            <div class="comment-content-footer">
+                                <div class="row">
+                                    <div class="col-md-2"><span class="reply-btn" save-id="1">回复</span></div>
+                                </div>
+                            </div>
+                            <div class="reply-list">
+                                <div class="reply">
+                                    <div><a>张三</a>回复：<a>张三丰  </a><span>不错</span></div>
+                                    <p><span>2022-10-11</span><span class="reply-list-btn" saves-id="13">回复</span></p>
+                                </div>
+                                <div class="reply">
+                                    <div><a>张三</a>回复：<a>张三  </a><span>阿萨德饭</span></div>
+                                    <p><span>2022-11-01</span><span class="reply-list-btn" saves-id="15">回复</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment-info">
+                        <header><img th:src="@{image/OIP-C.jfif}" class="rounded-circle" style="max-width: 70px;"></header>
+                        <div class="comment-right">
+                            <h4>俞莲舟</h4>
+                            <div class="comment-content-header"><span><i class="glyphicon glyphicon-time"></i>2019-08-21</span></div>
+                            <p class="content">这只猫善解人意</p>
+                            <div class="comment-content-footer">
+                                <div class="row">
+                                    <div class="col-md-2"><span class="reply-btn" save-id="3">回复</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="row ">
+                <div class="col">
+                    <textarea cols="115" rows="4" placeholder="来说几句吧" class="mytextarea" id="content"></textarea>
+                    <button type="button" class="btn btn-primary mb-4">评论</button>
+                </div>
+            </div>
+            <div class="col bg-danger">
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- 模态框开始 -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">请确认个人信息</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="inputName">姓名</label>
+                            <input type="name" class="form-control" id="inputName" aria-describedby="emailHelp">
+                            <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPetName">宠物姓名</label>
+                            <input type="petName" class="form-control" id="inputPetName">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputSex">性别</label>
+                            <input type="sex" class="form-control" id="inputSex">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPhone">联系方式</label>
+                            <input type="phone" class="form-control" id="inputPhone">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputAddress">地址</label>
+                            <input type="address" class="form-control" id="inputAddress">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary">提交申请</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 模态框结束 -->
+
+    <!-- 引入js文件 -->
+    <div th:replace="user/common :: #common_script"></div>
+</body>
+
+
+</html>
