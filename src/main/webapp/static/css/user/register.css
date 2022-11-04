@@ -1,0 +1,10 @@
+/*设置背景图片*/
+
+body {
+    height: 100%;
+    background-color: rgba(42, 214, 226, 0.247);
+}
+
+.mt-5 {
+    margin-top: 100px !important;
+}

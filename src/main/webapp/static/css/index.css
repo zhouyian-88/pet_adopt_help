@@ -1,0 +1,61 @@
+.menus-box {
+    max-width: 230px;
+    min-width: 230px;
+    background: #2a3f54;
+}
+
+.menus-box .brand {
+    cursor: pointer;
+}
+
+.menus-box .user-image {
+    width: 66px;
+    height: 66px;
+}
+
+.menus-box .list-group .list-group-item::before,
+.menus-box .list-group .list-group-item::after {
+    content: ' ';
+    display: block;
+    background-color: #425668;
+    position: absolute;
+}
+
+.menus-box .list-group .list-group-item::before {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    left: 28px;
+}
+
+.menus-box .list-group .list-group-item::after {
+    width: 1px;
+    height: 100%;
+    left: 32px;
+}
+
+.menus-box .card .card-header:hover {
+    background-color: rgba(156, 152, 152, 0.212) !important;
+}
+
+.menus-box .list-group :hover {
+    /* rgba让其背景子不再透明 */
+    background-color: rgba(156, 152, 152, 0.212) !important;
+}
+
+
+/* .menus-box .card :hover {
+    background-color: #0df1de !important;
+} */
+
+.main-box {
+    background: #f7f7f7;
+}
+
+.main-navbar {
+    background: #ededed;
+}
+
+#active {
+    background-color: aqua;
+}
