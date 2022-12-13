@@ -63,7 +63,10 @@
 
 <div id="common_script">
     <!-- 引入js文件 -->
-    <div th:replace="user/common :: #common_script"></div>
+    <!-- 引入js文件 -->
+    <script type="text/javascript" th:src="@{static/js/jquery-3.5.1.min.js}"></script>
+    <!-- 引入bootstrap文件 -->
+    <script type="text/javascript" th:src="@{static/bootstrap/js/bootstrap.js}"></script>
 </div>
 
 </body>

@@ -8,9 +8,9 @@
     <title>登入</title>
 </head>
 <!--引入css-->
-<<div th:replace="common :: #common_css"></div>
+<div th:replace="admin/common :: #common_css"></div>
 <!-- 页面样式 -->
-<link rel="stylesheet"th:href="@{css/login.css}">
+<link rel="stylesheet"th:href="@{/static/css/login.css}">
 
 <body>
     <div class="container-fluid">
@@ -21,23 +21,26 @@
                         <h2>宠物收养救助系统</h2>
                     </div>
                     <div class="card-body">
-                        <form action="index.html">
+                        <form>
+                            <div class="form-group row justify-content-end mr-4">
+                             <span class="text-danger" id="form"></span>
+                            </div>
                             <div class="form-group row justify-content-center">
                                 <!-- <label for="inputName" class="col-sm-2 col-form-label">用户名：</label> -->
                                 <div class="col-sm-10 input-group">
                                     <span class="input-group-text"><i class="bi bi-person"></i></span>
-                                    <input type="text" name="username" class="form-control" id="inputUsername" placeholder="用户名">
+                                    <input type="text" name="nickname" class="form-control" id="inputUsername" value="yian" placeholder="用户名">
                                 </div>
                             </div>
                             <div class="form-group row justify-content-center">
                                 <!-- <label for="inputPassword3" class="col-sm-2 col-form-label">密码:</label> -->
                                 <div class="col-sm-10 input-group">
                                     <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                                    <input type="password" name="password" class="form-control" id="inputPassword" placeholder="密码">
+                                    <input type="password" name="password" class="form-control" id="inputPassword" value="123456" placeholder="密码">
                                 </div>
                             </div>
                             <div class="row justify-content-center">
-                                <button type="submit" class="btn btn-primary  w-50">登入</button>
+                                <button type="button" class="btn btn-primary  w-50" id="loginButton">登入</button>
                             </div>
 
                         </form>
@@ -50,6 +53,57 @@
 
 </body>
 <!-- 引入js文件 -->
-<div th:replace="common :: #common_script"></div>
+<div th:replace="admin/common :: #common_script"></div>
+
+<script>
+    $(function (){
+        //登录功能
+
+        //获取登录按钮
+        $("#loginButton").click(function (){
+             //获取所需要的表单数据
+            var nickname = $("#inputUsername").val()
+            var password = $("#inputPassword").val();
+
+            if(nickname==null||nickname==""||nickname.length>=18){
+                $("#form").text("输入非法，用户名长度不能超过18")
+                return
+            }
+
+            if(password==null||password==""||password.length>=18){
+                $("#form").text("输入非法，密码长度不能超过18")
+                return
+            }
+
+            //发送请求
+            $.ajax({
+                url:'[[@{/admin/login}]]',
+                data:{
+                    nickname:nickname,
+                    password:password
+                },
+                type:'post',
+                dataType:'json',
+                success:function (data){
+                    console.log(data)
+                    if(data.code=="200"){
+                        $("#nameSpan").text()
+                        $("#passwordSpan").text()
+                        window.location.href="[[@{/admin/index}]]"
+                    }else{
+                        $("#form").text(data.message)
+                    }
+
+                }
+
+
+
+            })
+
+        })
+
+    })
+
+</script>
 
 </html>

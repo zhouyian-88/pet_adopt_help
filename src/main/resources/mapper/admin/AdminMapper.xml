@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atyian.pet.admin.mapper.AdminMapper">
+
+    <resultMap id="baseResultMap" type="com.atyian.pet.admin.pojo.Admin">
+        <id column="pk_admin_id" property="pkAdminId"></id>
+        <result column="uk_admin_nickname" property="ukAdminNickname"></result>
+        <result column="admin_password" property="adminPassword"></result>
+        <result column="admin_name" property="adminName"></result>
+        <result column="sex" property="sex"></result>
+        <result column="age" property="age"></result>
+        <result column="phone" property="phone"></result>
+        <result column="birthday" property="birthday"></result>
+        <result column="picture" property="picture"></result>
+        <result column="remark" property="remark"></result>
+        <result column="create_time" property="createTime"></result>
+        <result column="update_time" property="updateTime"></result>
+        <result column="address" property="address"></result>
+        <result column="state" property="state"></result>
+        <result column="permission" property="permission"></result>
+    </resultMap>
+
+    <sql id="baseSql">
+        `pk_admin_id`,`uk_admin_nickname`,`admin_password`,`admin_name`,`sex`,`age`,`phone`,
+        `birthday`,`picture`,`remark`,`create_time`,`update_time`,`address`,`state`,`permission`
+    </sql>
+
+    <sql id="querySql">
+       `uk_admin_nickname`,`admin_password`,`admin_name`,`sex`,`age`,`phone`,
+        `birthday`,`picture`,`remark`,`create_time`,`update_time`,`address`,`state`,`permission`
+    </sql>
+
+    <select id="selectForOne" resultMap="baseResultMap">
+        select * from pet_admin where uk_admin_nickname = #{nickname} and admin_password = #{password}
+    </select>
+
+    <insert id="insertAdmin" parameterType="admin">
+        insert into pet_admin (<include refid="baseSql"></include>) values (#{pkAdminId},#{ukAdminNickname},#{adminPassword},
+                                      #{adminName},#{sex},#{age},#{phone},#{birthday},#{picture},#{remark},#{createTime},#{updateTime},
+                                      #{address},#{state},#{permission})
+    </insert>
+
+    <select id="listByCondition" resultMap="baseResultMap">
+        select <include refid="baseSql"></include> from pet_admin
+        <where>
+            <if test="nickname != null and nickname != ''">
+                uk_admin_nickname like concat('%',#{nickname},'%')
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone like concat('%',#{phone},'%')
+            </if>
+        </where>
+    </select>
+
+
+    <update id="updateByPrimaryKey" parameterType="admin">
+        update pet_admin
+            <set>
+                <if test="ukAdminNickname!=null and ukAdminNickname != ''">
+                    `uk_admin_nickname`= #{ukAdminNickname},
+                </if>
+                <if test="adminPassword!=null and adminPassword != ''">
+                    `admin_name`= #{adminName},
+                </if>
+                <if test="adminName!=null and adminName != ''">
+                    `uk_admin_nickname`= #{ukAdminNickname},
+                </if>
+                <if test="sex!=null">
+                    `sex`= #{sex},
+                </if>
+                <if test="age!=null">
+                    `age`= #{age},
+                </if>
+                <if test="phone!=null and phone != ''">
+                    `phone`= #{phone},
+                </if>
+                <if test="birthday!=null">
+                    `birthday`= #{birthday},
+                </if>
+                <if test="picture!=null and picture != ''">
+                    `picture`= #{picture},
+                </if>
+                <if test="remark!=null and remark != ''">
+                    `remark`= #{remark},
+                </if>
+                <if test="updateTime!=null">
+                    `update_time`= #{updateTime},
+                </if>
+                <if test="address!=null and address != ''">
+                    `address`= #{address},
+                </if>
+                <if test="permission!=null">
+                    `permission`= #{permission}
+                </if>
+            </set>
+             where pk_admin_id = #{pkAdminId}
+    </update>
+
+
+    <select id="selectAdminByPrimaryKey" resultMap="baseResultMap"  >
+        select <include refid="baseSql"></include> from pet_admin where pk_admin_id = #{id}
+    </select>
+
+
+    <delete id="deleteAdminByPrimaryKey">
+        delete from pet_admin where pk_admin_id = #{id}
+    </delete>
+</mapper>

@@ -4,10 +4,12 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <settings>
-        <setting name="logImpl" value="STDOUT_LOGGING"/>
+        <!--<setting name="logImpl" value="STDOUT_LOGGING"/>-->
+        <setting name="logImpl" value="LOG4J"/>
     </settings>
     <typeAliases>
-        <package name="com.atyian.crm.model"/>
+        <package name="com.atyian.pet.admin.pojo"/>
+        <package name="com.atyian.pet.user.pojo"/>
     </typeAliases>
     <!--当页面数据不刷新时，一定要引入分页插件-->
     <plugins>
@@ -17,7 +19,4 @@
             <property name="reasonable" value="true"/>
         </plugin>
     </plugins>
-    <mappers>
-        <package name="com.atyian.crm.mapper"/>
-    </mappers>
 </configuration>
