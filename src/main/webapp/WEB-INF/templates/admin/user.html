@@ -111,11 +111,7 @@
 
 
                 <!--分页条开始-->
-            <div  class="row m-3 justify-content-between">
-                 <div class="col-9">
-                    <ul  id="common_pagination"> </ul>
-                 </div>
-            </div>
+                <div th:replace="admin/common :: #common_paging"></div>
                 <!--分页条结束-->
             </div>
             <!-- 右侧主体结束 -->
@@ -334,19 +330,17 @@
                 return
             }
             let reg_age = /^(?:[1-9][0-9]?|1[01][0-9]|120)$/;
-            if (age.length < 0 || age == null) {
+
                 if (!reg_age.test(age)) {
                     alert("年龄输入不合法")
                     return
                 }
-            }
             let reg_tel = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
-            if (phone.length < 0 || phone == null) {
                 if (!reg_tel.test(phone)) {
                     alert("手机号码输入不合法")
                     return
                 }
-            }
+
             if (address == "" || address.length < 0) {
                 alert("地址输入不合法")
                 return
@@ -384,13 +378,10 @@
                         $("#createForm")[0].reset();
                         //关闭模态框
                         $("#saveUserModal").modal('hide')
-                    }
-
-                },
-                error:function (data){
-                    if(data.code==="300"){
+                    }else if(data.code === "300"){
                         alert(data.message)
                     }
+
                 }
 
             })
@@ -436,6 +427,8 @@
                         $('#editExperience').attr('option',result.experience)
                         showUpload('#edit_pic')
                         $("#editUserModal").modal('show')
+                    }else if(data.code === "300"){
+                        alert(data.message)
                     }
                 }
             })
@@ -468,19 +461,16 @@
                 return
             }
             let reg_age = /^(?:[1-9][0-9]?|1[01][0-9]|120)$/;
-            if (age.length < 0 || age == null) {
                 if (!reg_age.test(age)) {
                     alert("年龄输入不合法")
                     return
                 }
-            }
+
             let reg_tel = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
-            if (phone.length < 0 || phone == null) {
                 if (!reg_tel.test(phone)) {
                     alert("手机号码输入不合法")
                     return
                 }
-            }
             if (address == "" || address.length < 0) {
                 alert("地址输入不合法")
                 return
@@ -504,13 +494,10 @@
                         //重置表单
                         $("#editForm")[0].reset();
                         $("#editUserModal").modal('hide')
-                    }
-
-                },
-                error:function (data){
-                    if(data.code==="300"){
+                    }else if(data.code === "300"){
                         alert(data.message)
                     }
+
                 }
 
             })
@@ -521,7 +508,9 @@
         $("tbody").on('click',"button[name=deleteButton]",function (){
             //得到id
             let id = $(this).attr('id');
-            confirm("确认要删除吗？")
+            if(!confirm("确认要删除吗？")){
+                return
+            }
             //发送ajax请求
             $.ajax({
                 url:'/pet/admin/user/delete',
@@ -532,10 +521,7 @@
                     if(data.code==="200"){
                         //刷新页面
                         queryUserByConditionForNum($('#common_pagination').bootstrapPaginator('getOption','currentPage'),$('#common_pagination').bootstrapPaginator('getOption','numberOfPages'))
-                    }
-                },
-                error:function (data){
-                    if(data.code==="300"){
+                    }else if(data.code === "300"){
                         alert(data.message)
                     }
                 }
@@ -641,10 +627,7 @@
                         }
                     }
                     $('#common_pagination').bootstrapPaginator(options);
-                }
-            },
-            error:function (data){
-                if(data.code==="300"){
+                }else if(data.code === "300"){
                     alert(data.message)
                 }
             }

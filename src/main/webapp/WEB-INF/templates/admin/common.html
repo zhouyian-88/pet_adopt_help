@@ -169,31 +169,10 @@
   <!-- 头部导航栏结束 -->
 
   <!--分页条开始-->
-  <div id="common_pagination" class="row m-3 justify-content-between">
-    <div class="col-9">
-      当前1页,总3页,总10条记录
-    </div>
-    <div class="col-3">
-      <nav aria-label="...">
-        <ul class="pagination pagination-sm">
-          <li class="page-item disabled">
-            <a class="page-link" th:href="@{#}" tabindex="-1">首页</a>
-          </li>
-          <li class="page-item disabled">
-            <a class="page-link"  th:href="@{#}" tabindex="-1">上一页</a>
-          </li>
-          <li class="page-item"><a class="page-link" th:href="@{#}">1</a></li>
-          <li class="page-item"><a class="page-link" th:href="@{#}">2</a></li>
-          <li class="page-item"><a class="page-link" th:href="@{#}">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#">下一页</a>
-          </li>
-          <li class="page-item">
-            <a class="page-link" href="#">尾页</a>
-          </li>
-        </ul>
-      </nav>
-    </div>
+  <div id="common_paging" class="row m-3 justify-content-between">
+      <div class="col-9">
+        <ul  id="common_pagination"> </ul>
+      </div>
   </div>
   <!--分页条结束-->
 
