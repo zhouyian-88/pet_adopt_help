@@ -72,7 +72,7 @@
                             <table class="table table-striped table-sm text-center">
                                 <thead>
                                 <tr>
-                                    <th scope="col">#</th>
+                                    <th scope="col">ID</th>
                                     <th scope="col">管理员账号</th>
                                     <th scope="col">真实姓名</th>
                                     <th scope="col">性别</th>
@@ -558,10 +558,16 @@
             success: function (data) {
                 // console.log(data)
                 if (data.code === "200") {
-
+                    var htmlStr = "";
+                    if(data.data.total===0){
+                        htmlStr += `<tr>
+                                    <td colspan="11" class="font-weight-bold">无数据</td>
+                                </tr>`
+                        $("tbody").html(htmlStr);
+                        return
+                    }
                     //遍历
                     //拼接所有字符串
-                    var htmlStr = "";
                     $.each(data.data.list, function (index, obj) {
                         $("#countId").val(data.data.total)
                         htmlStr += `<tr>
@@ -584,7 +590,9 @@
                     })
                     //加载到tBody身上
                     $("tbody").html(htmlStr);
-
+                    //清空查询输入框
+                    $("#adminNickname").val("");
+                    $("#phone").val("")
                     //分页插件
                    var options = {
                         currentPage: pageNum,

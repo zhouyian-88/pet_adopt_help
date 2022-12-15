@@ -71,7 +71,7 @@
                                 <table class="table table-striped table-sm text-center">
                                     <thead>
                                         <tr>
-                                            <th scope="col">#</th>
+                                            <th scope="col">ID</th>
                                             <th scope="col">用户账号</th>
                                             <th scope="col">真实姓名</th>
                                             <th scope="col">性别</th>
@@ -85,7 +85,6 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-
                                     <!--<tr>
                                             <th scope="row">2</th>
                                             <td>克莱</td>
@@ -372,7 +371,7 @@
                 contentType: false, //必须
                 mimeType:"multipart/form-data",
                 success: function (data) {
-                    console.log(data)
+                    //console.log(data)
                     if (data.code === "200") {
                         //刷新页面
                         var total = $("#countId").val();
@@ -403,7 +402,7 @@
 
         //获取查询按钮，点击按条件查询
         $("#findButton").click(function () {
-            queryAdminByConditionForNum(1, 2);
+            queryUserByConditionForNum(1, 5);
         })
 
         //获取每个单独的修改按钮
@@ -421,7 +420,7 @@
                 type:'get',
                 dataType:'json',
                 success:function (data){
-                    console.log(data)
+                   // console.log(data)
                     if(data.code=="200"){
                         let result = data.data;
                         $('#editId').val(result.pkUserId);
@@ -499,7 +498,7 @@
                 contentType: false, //必须
                 mimeType:"multipart/form-data",
                 success: function (data) {
-                    console.log(data)
+                  //  console.log(data)
                     if (data.code == "200") {
                         queryUserByConditionForNum($('#common_pagination').bootstrapPaginator('getOption','currentPage'),$('#common_pagination').bootstrapPaginator('getOption','numberOfPages'))
                         //重置表单
@@ -577,11 +576,20 @@
             type: 'get',
             dataType: 'json',
             success: function (data) {
-                console.log(data)
+               // console.log(data)
+                var htmlStr = "";
+                //无数据
+                if(data.data.total===0){
+                    htmlStr += `<tr>
+                                    <td colspan="11" class="font-weight-bold">无数据</td>
+                                </tr>`
+                    $("tbody").html(htmlStr);
+                    return
+                }
                 if (data.code === "200") {
                     //遍历
                     //拼接所有字符串
-                    var htmlStr = "";
+
                     $.each(data.data.list, function (index, obj) {
                         $("#countId").val(data.data.total)
                         htmlStr += `<tr>
@@ -605,6 +613,9 @@
                     //加载到tBody身上
                     $("tbody").html(htmlStr);
 
+                    //清空查询输入框
+                    $("#ukUserName").val("");
+                    $("#phone").val("")
                     //分页插件
                     var options = {
                         currentPage: pageNum,

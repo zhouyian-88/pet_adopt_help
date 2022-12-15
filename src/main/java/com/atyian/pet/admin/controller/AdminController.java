@@ -69,7 +69,7 @@ public class AdminController {
     public CommonResult list(CommonPageRequest adminPageRequest){
         Object admin = adminService.listByCondition(adminPageRequest);
         if(admin != null){
-            return CommonResult.success();
+            return CommonResult.success(admin);
         }else{
             return CommonResult.fail("查询失败");
         }
@@ -106,7 +106,7 @@ public class AdminController {
         Admin admin = adminService.getAdminByPrimaryKey(id);
 //        System.out.println(admin);
         if(admin != null){
-            return CommonResult.success();
+            return CommonResult.success(admin);
         }else{
             return CommonResult.fail("查询失败");
         }
