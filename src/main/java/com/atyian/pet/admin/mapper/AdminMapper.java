@@ -1,10 +1,9 @@
 package com.atyian.pet.admin.mapper;
 
-import com.atyian.pet.admin.controller.request.UserPageRequest;
+import com.atyian.pet.admin.controller.request.CommonPageRequest;
 import com.atyian.pet.admin.pojo.Admin;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -34,10 +33,10 @@ public interface AdminMapper {
 
     /**
      * 根据条件分页查询管理员信息
-     * @param userPageRequest
+     * @param adminPageRequest
      * @return
      */
-    List<Admin> listByCondition(UserPageRequest userPageRequest);
+    List<Admin> listByCondition(CommonPageRequest adminPageRequest);
 
 
     /**

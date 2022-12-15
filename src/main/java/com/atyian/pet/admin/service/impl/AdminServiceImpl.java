@@ -1,6 +1,6 @@
 package com.atyian.pet.admin.service.impl;
 
-import com.atyian.pet.admin.controller.request.UserPageRequest;
+import com.atyian.pet.admin.controller.request.CommonPageRequest;
 import com.atyian.pet.admin.mapper.AdminMapper;
 import com.atyian.pet.admin.pojo.Admin;
 import com.atyian.pet.admin.service.AdminService;
@@ -40,9 +40,9 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Object listByCondition(UserPageRequest userPageRequest) {
-        PageHelper.startPage(userPageRequest.getPageNum(),userPageRequest.getPageSize());
-        List<Admin> admin = adminMapper.listByCondition(userPageRequest);
+    public Object listByCondition(CommonPageRequest adminPageRequest) {
+        PageHelper.startPage(adminPageRequest.getPageNum(), adminPageRequest.getPageSize());
+        List<Admin> admin = adminMapper.listByCondition(adminPageRequest);
         return new PageInfo<>(admin);
     }
 

@@ -1,8 +1,7 @@
 package com.atyian.pet.admin.service;
 
-import com.atyian.pet.admin.controller.request.UserPageRequest;
+import com.atyian.pet.admin.controller.request.CommonPageRequest;
 import com.atyian.pet.admin.pojo.Admin;
-import org.apache.ibatis.annotations.Param;
 
 /**
  * @athor:zhouhaohui
@@ -16,7 +15,7 @@ public interface AdminService {
 
     int create(Admin admin);
 
-    Object listByCondition(UserPageRequest userPageRequest);
+    Object listByCondition(CommonPageRequest adminPageRequest);
 
     int updateByPrimaryKey(Admin admin);
 

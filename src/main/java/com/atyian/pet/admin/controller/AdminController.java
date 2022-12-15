@@ -1,13 +1,10 @@
 package com.atyian.pet.admin.controller;
 
-import com.atyian.pet.admin.controller.request.UserPageRequest;
+import com.atyian.pet.admin.controller.request.CommonPageRequest;
 import com.atyian.pet.admin.pojo.Admin;
 import com.atyian.pet.admin.service.AdminService;
 import com.atyian.pet.common.CommonResult;
 import com.atyian.pet.util.UploadFile;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.*;
-import java.util.Random;
 
 
 /**
@@ -57,8 +53,12 @@ public class AdminController {
         String newFileName = UploadFile.uploadImage(picture);
         admin.setPicture(newFileName);
         int result = adminService.create(admin);
-        CommonResult commonResult = CommonResult.success(result);
-        return commonResult;
+        if(result == 1){
+            return CommonResult.success();
+        }else{
+            return  CommonResult.fail("创建失败");
+        }
+
     }
 
     /**
@@ -66,8 +66,14 @@ public class AdminController {
      * @return
      */
     @GetMapping("/list")
-    public CommonResult list(UserPageRequest userPageRequest){
-        return CommonResult.success(adminService.listByCondition(userPageRequest));
+    public CommonResult list(CommonPageRequest adminPageRequest){
+        Object admin = adminService.listByCondition(adminPageRequest);
+        if(admin != null){
+            return CommonResult.success();
+        }else{
+            return CommonResult.fail("查询失败");
+        }
+
     }
 
     /**
@@ -81,7 +87,12 @@ public class AdminController {
             String newFileName = UploadFile.uploadImage(picture);
             admin.setPicture(newFileName);
         }
-        return CommonResult.success(adminService.updateByPrimaryKey(admin));
+        int result = adminService.updateByPrimaryKey(admin);
+        if(result == 1){
+            return CommonResult.success();
+        }else{
+            return  CommonResult.fail("创建失败");
+        }
     }
 
 
@@ -93,8 +104,12 @@ public class AdminController {
     @GetMapping("/query")
     public CommonResult query(Integer id){
         Admin admin = adminService.getAdminByPrimaryKey(id);
-        System.out.println(admin);
-        return CommonResult.success(admin);
+//        System.out.println(admin);
+        if(admin != null){
+            return CommonResult.success();
+        }else{
+            return CommonResult.fail("查询失败");
+        }
     }
 
     /**

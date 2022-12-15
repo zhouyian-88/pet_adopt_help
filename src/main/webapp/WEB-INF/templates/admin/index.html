@@ -11,8 +11,7 @@
     <!-- 页面样式 -->
     <link rel="stylesheet" th:href="@{/static/css/index.css}">
     <!--输入框样式-->
-    <link rel="stylesheet" th:href="@{/static/css/inputfile/fileinput.css}">
-    <link rel="stylesheet" th:href="@{/static/css/inputfile/fileinput-rtl.css}">
+    <div th:replace="admin/common :: #common_fileInput_css"></div>
 
 </head>
 
@@ -21,7 +20,7 @@
     <div class="row vh-100 no-gutters">
         <!-- 左侧导航开始 -->
         <div th:replace="admin/common :: #common_nav"></div>
-        <!-- 左侧导航结束 -->
+        <!-- 左侧导航replace结束 -->
 
         <!-- 右侧主体开始 -->
         <div class="col overflow-auto main-box flex-column">
@@ -120,7 +119,6 @@
                 <h5 class="modal-title" id="exampleModalLabel">新建管理员信息</h5>
             </div>
             <div class="modal-body">
-<!--                enctype="multipart/form-data"-->
                 <form id="createForm">
                     <div class="form-row">
                         <div class="form-group col-md-6">
@@ -291,11 +289,9 @@
 
 <!-- 引入js文件 -->
 <div th:replace="admin/common :: #common_script"></div>
-
+<div th:replace="admin/common :: #common_fileInput_script"></div>
 
 </div>
-<script type="text/javascript" th:src="@{/static/js/inputfile/fileinput.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/inputfile/zh.js}"></script>
 <!--由于上面公共模块已经引入了js，所以下面不用js，直接就可以使用了-->
 <script type="text/javascript">
     //获取新增模态框管理员
@@ -356,15 +352,6 @@
             //使用jquery获取对象，不能再forData中使用，要使用原生的js来获取
             var formData = new FormData(document.getElementById('createForm'));
             console.log(formData)
-            // formData.append("ukAdminNickname", ukAdminNickname);
-            // formData.append("adminPassword", adminPassword);
-            // formData.append("adminName", adminName);
-            // formData.append("sex", sex);
-            // formData.append("age", age);
-            // formData.append("phone", phone);
-            // formData.append("birthday", birthday);
-            // formData.append("remark", remark);
-            // formData.append("permission", permission);
             formData.append("file", picture);
             //发送ajax请求
             $.ajax({
@@ -377,8 +364,8 @@
                 contentType: false, //必须
                 mimeType:"multipart/form-data",
                 success: function (data) {
-                    console.log(data)
-                    if (data.data == 1) {
+                  //  console.log(data)
+                    if (data.code === "200") {
                         //刷新页面
                         var total = $("#countId").val();
                         if(total%5===0){
@@ -392,33 +379,28 @@
                         $("#saveAdminModal").modal('hide')
                     }
 
+                },
+                error:function (data){
+                    if(data.code==="300"){
+                        alert(data.message)
+                    }
                 }
 
             })
 
         })
+        showUpload("#new_pic")
 
-        //显示上传文件的图片
-        $("#new_pic").fileinput({
-            showPreview: true,
-            language: 'zh',
-            showCaption: false,
-            dropZoneEnabled: false,
-            showUpload:false,//是否显示上传按钮
-            showRemove:false,
-        });
 
         //获取查询按钮，点击按条件查询
         $("#findButton").click(function () {
-            queryAdminByConditionForNum(1, 2);
+            queryAdminByConditionForNum(1, 5);
         })
 
         //获取每个单独的修改按钮
         //点击修改按钮，发送ajax请求
         $("tbody").on('click',"button[name=editButton]",function(){
-            // console.log(this)
-           let id = $(this).attr('id').substring(5)
-
+           let id = $(this).attr('id')
             //弹出模态框
             $.ajax({
                 url:'/pet/admin/query',
@@ -428,7 +410,7 @@
                 type:'get',
                 dataType:'json',
                 success:function (data){
-                    console.log(data)
+                   // console.log(data)
                     if(data.code=="200"){
                         let result = data.data;
                         $('#editId').val(result.pkAdminId);
@@ -443,22 +425,7 @@
                         $('#editAddress').val(result.address)
                         $('#editPessimistic').attr('option',result.permission)
                         $('#edit_pic').attr("file",result.picture)
-                        $("#edit_pic").fileinput({
-                            showPreview: true,
-                            language: 'zh',
-                            uploadUrl:'[[@{/image/show?fileName=}]]'+result.picture,
-                            showCaption: false,
-                            dropZoneEnabled: false,
-                            showUpload:false,//是否显示上传按钮
-                            showRemove:false,
-                            previewFileType: ['image'],
-                            allowedPreviewTypes: ['image'],
-                            initialPreviewAsData: true,
-                            initialPreview: [  //初始化回显
-                                //obj.picture
-                                $("#edit_pic").url
-                            ]
-                        });
+                        showUpload("#edit_pic")
                         $("#editAdminModal").modal('show')
                     }
                 }
@@ -469,7 +436,7 @@
         //模态框中的修改按钮，进行修改
         $("#editButtonModal").click(function () {
             //获取数据进行校验
-            let pkAdminId = $("#editId").val()
+            //let pkAdminId = $("#editId").val()
             let ukAdminNickname = $.trim($("#editNickname").val())
             let adminPassword = $.trim($("#editPassword").val())
             let adminName = $.trim($("#editName").val())
@@ -521,7 +488,7 @@
                 contentType: false, //必须
                 mimeType:"multipart/form-data",
                 success: function (data) {
-                    console.log(data)
+                    // console.log(data)
                     if (data.code == "200") {
                         queryAdminByConditionForNum($('#common_pagination').bootstrapPaginator('getOption','currentPage'),$('#common_pagination').bootstrapPaginator('getOption','numberOfPages'))
                         //重置表单
@@ -529,6 +496,11 @@
                         $("#editAdminModal").modal('hide')
                     }
 
+                },
+                error:function (data){
+                    if(data.code==="300"){
+                        alert(data.message)
+                    }
                 }
 
             })
@@ -552,6 +524,11 @@
                     if(data.code==="200"){
                         //刷新页面
                         queryAdminByConditionForNum($('#common_pagination').bootstrapPaginator('getOption','currentPage'),$('#common_pagination').bootstrapPaginator('getOption','numberOfPages'))
+                    }
+                },
+                error:function (data){
+                    if(data.code==="300"){
+                        alert(data.message)
                     }
                 }
 
@@ -579,7 +556,7 @@
             type: 'get',
             dataType: 'json',
             success: function (data) {
-                console.log(data)
+                // console.log(data)
                 if (data.code === "200") {
 
                     //遍历
@@ -599,7 +576,7 @@
                             <td>${obj.state == 1 ? '正常' : '已注销'}</td>
                             <td>${obj.permission == 1 ? '普通管理员' : '超级管理员'}</td>
                             <td>
-                                <button type="button" class="btn btn-primary" name="editButton" data-toggle="modal" id="edit-${obj.pkAdminId}">修改
+                                <button type="button" class="btn btn-primary" name="editButton" data-toggle="modal" id="${obj.pkAdminId}">修改
                                 </button>
                                 <button type="button" class="btn btn-danger" name="deleteButton" id="${obj.pkAdminId}">删除</button>
                             </td>
@@ -634,10 +611,26 @@
                     }
                     $('#common_pagination').bootstrapPaginator(options);
                 }
+            },
+            error:function (data){
+                if(data.code==="300"){
+                    alert(data.message)
+                }
             }
         })
     }
 
+    function showUpload(pictureId){
+        //显示上传文件的图片
+        $(pictureId).fileinput({
+            showPreview: true,
+            language: 'zh',
+            showCaption: false,
+            dropZoneEnabled: false,
+            showUpload:false,//是否显示上传按钮
+            showRemove:false,
+        });
+    }
     //日期格式化
     function getMyDate(str){
         var oDate = new Date(str),
