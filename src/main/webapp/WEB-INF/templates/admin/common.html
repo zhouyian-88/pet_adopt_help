@@ -9,6 +9,11 @@
     <!-- bootstrap icons样式 -->
     <link rel="stylesheet" th:href="@{/static/bootstrap-icons-1.9.1/bootstrap-icons.css}">
   </div>
+
+  <div id="common_fileInput_css">
+    <link rel="stylesheet" th:href="@{/static/css/inputfile/fileinput.css}">
+    <link rel="stylesheet" th:href="@{/static/css/inputfile/fileinput-rtl.css}">
+  </div>
 </head>
 
 <body>
@@ -57,7 +62,7 @@
         <div class="card rounded-0 bg-transparent text-white">
           <div class="card-header border-top shadow-sm" tabindex="1" data-toggle="collapse" data-target="#collapseUser" aria-expanded="true" aria-controls="collapseOne">
             <i class="bi bi-pencil-square mr-2"></i>
-            <a th:href="@{user}" class="text-decoration-none text-white">用户管理</a>
+            <a th:href="@{/admin/user/}" class="text-decoration-none text-white">用户管理</a>
           </div>
         </div>
         <!-- 用户管理结束 -->
@@ -67,7 +72,7 @@
         <div class="card rounded-0 bg-transparent text-white">
           <div class="card-header border-top shadow-sm" data-toggle="collapse" data-target="#collapseUser" aria-expanded="true" aria-controls="collapseOne">
             <i class="bi bi-pencil-square mr-2"></i>
-            <a th:href="@{pet}" class="text-decoration-none text-white">宠物管理</a>
+            <a th:href="@{/admin/pet}" class="text-decoration-none text-white">宠物管理</a>
           </div>
         </div>
         <!-- 宠物管理结束 -->
@@ -77,7 +82,7 @@
         <div class="card rounded-0 bg-transparent text-white">
           <div class="card-header border-top shadow-sm" data-toggle="collapse" data-target="#collapseUser" aria-expanded="true" aria-controls="collapseOne">
             <i class="bi bi-pencil-square mr-2"></i>
-            <a th:href="@{pet_class}" class="text-decoration-none text-white">宠物分类</a>
+            <a th:href="@{/admin/pet_class}" class="text-decoration-none text-white">宠物分类</a>
           </div>
 
         </div>
@@ -88,14 +93,14 @@
         <div class="card rounded-0 bg-transparent text-white">
           <div class="card-header border-top shadow-sm" data-toggle="collapse" data-target="#collapseAdopt" aria-expanded="true" aria-controls="collapseOne">
             <i class="bi bi-pencil-square mr-2"></i>
-            <a th:href="@{pet_adopt}" class="text-decoration-none text-white">宠物收养</a>
+            <a th:href="@{/admin/pet_adopt}" class="text-decoration-none text-white">宠物收养</a>
             <i class="bi bi-chevron-down float-right"></i>
           </div>
 
           <div class="card-body bg-transparent collapse p-0" id="collapseAdopt" aria-labelledby="headingOne" data-parent="#accordionExample">
             <div class="list-group list-group-flush py-1">
-              <a th:href="@{agree_adopt}" class="list-group-item border-0 small px-5 bg-transparent position-relative d-flex align-items-center text-decoration-none text-white">同意收养信息</a>
-              <a th:href="@{disagree_adopt}" class="list-group-item border-0 small px-5 bg-transparent position-relative d-flex align-items-center text-decoration-none text-white">不同意收养信息</a>
+              <a th:href="@{/admin/agree_adopt}" class="list-group-item border-0 small px-5 bg-transparent position-relative d-flex align-items-center text-decoration-none text-white">同意收养信息</a>
+              <a th:href="@{/admin/disagree_adopt}" class="list-group-item border-0 small px-5 bg-transparent position-relative d-flex align-items-center text-decoration-none text-white">不同意收养信息</a>
             </div>
           </div>
         </div>
@@ -105,7 +110,7 @@
         <div class="card rounded-0 bg-transparent text-white">
           <div class="card-header border-top shadow-sm" data-toggle="collapse" data-target="#collapseUser" aria-expanded="true" aria-controls="collapseOne">
             <i class="bi bi-pencil-square mr-2"></i>
-            <a th:href="@{pet_help}" class="text-decoration-none text-white">宠物救助</a>
+            <a th:href="@{/admin/pet_help}" class="text-decoration-none text-white">宠物救助</a>
           </div>
 
         </div>
@@ -123,8 +128,8 @@
 
           <div class="collapse card-body p-0" id="collapseTwo" aria-labelledby="headingOne" data-parent="#accordionExample">
             <div class="list-group list-group-flush py-1">
-              <a th:href="@{pet_comment}" class="list-group-item border-0 small px-5 bg-transparent position-relative d-flex align-items-center text-decoration-none text-white">评论信息</a>
-              <a th:href="@{pet_comment_reply}" class="list-group-item border-0 small px-5 bg-transparent position-relative d-flex align-items-center text-decoration-none text-white">回复评论信息</a>
+              <a th:href="@{/admin/pet_comment}" class="list-group-item border-0 small px-5 bg-transparent position-relative d-flex align-items-center text-decoration-none text-white">评论信息</a>
+              <a th:href="@{/admin/pet_comment_reply}" class="list-group-item border-0 small px-5 bg-transparent position-relative d-flex align-items-center text-decoration-none text-white">回复评论信息</a>
             </div>
           </div>
         </div>
@@ -201,6 +206,11 @@
     <!--  引入bootstrap-paginator插件  -->
     <script type="text/javascript" th:src="@{/static/js/pagination/bootstrap-paginator.js}"></script>
   </div>
+
+<div id="common_fileInput_script">
+  <script type="text/javascript" th:src="@{/static/js/inputfile/fileinput.js}"></script>
+  <script type="text/javascript" th:src="@{/static/js/inputfile/zh.js}"></script>
+</div>
 
 </body>
 </html>
