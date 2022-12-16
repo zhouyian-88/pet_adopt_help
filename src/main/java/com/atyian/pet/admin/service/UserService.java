@@ -1,9 +1,7 @@
 package com.atyian.pet.admin.service;
 
-import com.atyian.pet.admin.controller.UserController;
 import com.atyian.pet.admin.controller.request.CommonPageRequest;
 import com.atyian.pet.admin.pojo.User;
-import com.mysql.cj.log.Log;
 
 /**
  * @author: yianzhou
