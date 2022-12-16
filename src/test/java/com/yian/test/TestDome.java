@@ -3,6 +3,7 @@ package com.yian.test;
 import com.atyian.pet.admin.controller.request.CommonPageRequest;
 import com.atyian.pet.admin.mapper.UserMapper;
 import com.atyian.pet.admin.pojo.User;
+import com.atyian.pet.admin.service.PetService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +23,20 @@ import java.util.List;
 @ContextConfiguration("classpath:applicationContext.xml")
 public class TestDome {
     @Autowired
-    private UserMapper userService;
+    private UserMapper userMapper;
+
+    @Autowired
+    private PetService petService;
     @Test
     public void test(){
         CommonPageRequest commonPageRequest = new CommonPageRequest();
         commonPageRequest.setPageNum(1);
         commonPageRequest.setPageSize(5);
-        List<User> users = userService.selectAllUserByCondition(commonPageRequest);
+        List<User> users = userMapper.selectAllUserByCondition(commonPageRequest);
         System.out.println(users);
+    }
+    @Test
+    public void test1(){
+        petService.listPClassByPetType("拉布拉多");
     }
 }
