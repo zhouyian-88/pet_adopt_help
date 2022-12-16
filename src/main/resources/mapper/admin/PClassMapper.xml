@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atyian.pet.admin.mapper.PClassMapper">
+
+    <resultMap id="BaseResultMap" type="com.atyian.pet.admin.pojo.PClass">
+            <id property="pkClassId" column="pk_class_id" jdbcType="INTEGER"/>
+            <result property="classType" column="class_type" jdbcType="INTEGER"/>
+            <result property="petType" column="pet_type" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        pk_class_id,class_type,pet_type,
+        create_time,update_time
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from pet_class
+        where  pk_class_id = #{pkClassId,jdbcType=INTEGER} 
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from pet_class
+        where  pk_class_id = #{pkClassId,jdbcType=INTEGER} 
+    </delete>
+    <insert id="insert" keyColumn="pk_class_id" keyProperty="pkClassId" parameterType="com.atyian.pet.admin.pojo.PClass" useGeneratedKeys="true">
+        insert into pet_class
+        ( pk_class_id,class_type,pet_type
+        ,create_time,update_time)
+        values (#{pkClassId,jdbcType=INTEGER},#{classType,jdbcType=INTEGER},#{petType,jdbcType=VARCHAR}
+        ,#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" keyColumn="pk_class_id" keyProperty="pkClassId" parameterType="com.atyian.pet.admin.pojo.PClass" useGeneratedKeys="true">
+        insert into pet_class
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="pkClassId != null">pk_class_id,</if>
+                <if test="classType != null">class_type,</if>
+                <if test="petType != null">pet_type,</if>
+                <if test="createTime != null">create_time,</if>
+                <if test="updateTime != null">update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="pkClassId != null">#{pkClassId,jdbcType=INTEGER},</if>
+                <if test="classType != null">#{classType,jdbcType=INTEGER},</if>
+                <if test="petType != null">#{petType,jdbcType=VARCHAR},</if>
+                <if test="createTime != null">#{createTime,jdbcType=TIMESTAMP},</if>
+                <if test="updateTime != null">#{updateTime,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.atyian.pet.admin.pojo.PClass">
+        update pet_class
+        <set>
+                <if test="classType != null">
+                    class_type = #{classType,jdbcType=INTEGER},
+                </if>
+                <if test="petType != null">
+                    pet_type = #{petType,jdbcType=VARCHAR},
+                </if>
+                <if test="createTime != null">
+                    create_time = #{createTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="updateTime != null">
+                    update_time = #{updateTime,jdbcType=TIMESTAMP},
+                </if>
+        </set>
+        where  pk_class_id = #{pkClassId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.atyian.pet.admin.pojo.PClass">
+        update pet_class
+        set 
+            class_type =  #{classType,jdbcType=INTEGER},
+            pet_type =  #{petType,jdbcType=VARCHAR},
+            create_time =  #{createTime,jdbcType=TIMESTAMP},
+            update_time =  #{updateTime,jdbcType=TIMESTAMP}
+        where   pk_class_id = #{pkClassId,jdbcType=INTEGER} 
+    </update>
+
+    <select id="selectPClassByCondition" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include> from pet_class
+        <where>
+            <if test="petType != null and petType != ''">
+                pet_type like concat('%',#{petType},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="selectPetType" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include> from pet_class
+        where pet_type = #{petType}
+    </select>
+</mapper>
