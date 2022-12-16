@@ -216,7 +216,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label for="editSex">性别*</label>
-                            <select class="custom-select mr-sm-2" name="sex" id="editSex">
+                            <select class="custom-select mr-sm-2 form-control" name="sex" id="editSex">
                                 <option value="0">保密*</option>
                                 <option selected value="1">男</option>
                                 <option value="2">女</option>
@@ -405,14 +405,14 @@
                         $('#editNickname').val(result.ukAdminNickname)
                         $('#editPassword').val(result.adminPassword)
                         $('#editName').val(result.adminName)
-                        $('#editSex').attr('option',result.sex)
+                        $('#editSex').val(result.sex)
                         $('#editAge').val(result.age)
                         $('#editPhone').val(result.phone)
                         $('#editBirthday').val(getMyDate(result.birthday))
                         $('#editRemark').val(result.remark)
                         $('#editAddress').val(result.address)
-                        $('#editPessimistic').attr('option',result.permission)
-                        $('#edit_pic').attr("file",result.picture)
+                        $('#editPessimistic').val(result.permission)
+                        // $('#edit_pic').attr("file",result.picture)
                         showUpload("#edit_pic")
                         $("#editAdminModal").modal('show')
                     }else if(data.code === "300"){

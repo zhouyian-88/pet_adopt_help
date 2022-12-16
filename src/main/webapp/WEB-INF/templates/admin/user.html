@@ -345,7 +345,9 @@
                 alert("地址输入不合法")
                 return
             }
-            console.log(picture)
+            //展示图片
+            showUpload("#new_pic")
+            // console.log(picture)
             if (typeof picture == "undefined") {
                 alert("请选择图片");
                 return;
@@ -388,8 +390,7 @@
 
         })
 
-        //展示图片
-        showUpload("#new_pic")
+
 
         //获取查询按钮，点击按条件查询
         $("#findButton").click(function () {
@@ -418,13 +419,13 @@
                         $('#editNickname').val(result.ukUserNickname)
                         $('#editPassword').val(result.userPassword)
                         $('#editName').val(result.userName)
-                        $('#editSex').attr('option',result.sex)
+                        $('#editSex').val(result.sex)
                         $('#editAge').val(result.age)
                         $('#editPhone').val(result.phone)
                         $('#editBirthday').val(getMyDate(result.birthday))
                         $('#editRemark').val(result.remark)
                         $('#editAddress').val(result.address)
-                        $('#editExperience').attr('option',result.experience)
+                        $('#editExperience').val(result.experience)
                         showUpload('#edit_pic')
                         $("#editUserModal").modal('show')
                     }else if(data.code === "300"){
