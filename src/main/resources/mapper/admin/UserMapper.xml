@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atyian.pet.admin.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="com.atyian.pet.admin.pojo.User">
+            <id property="pkUserId" column="pk_user_id" jdbcType="INTEGER"/>
+            <result property="ukUserNickname" column="uk_user_nickname" jdbcType="VARCHAR"/>
+            <result property="userPassword" column="user_password" jdbcType="CHAR"/>
+            <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+            <result property="sex" column="sex" jdbcType="TINYINT"/>
+            <result property="age" column="age" jdbcType="TINYINT"/>
+            <result property="phone" column="phone" jdbcType="CHAR"/>
+            <result property="birthday" column="birthday" jdbcType="DATE"/>
+            <result property="picture" column="picture" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="address" column="address" jdbcType="VARCHAR"/>
+            <result property="experience" column="experience" jdbcType="TINYINT"/>
+            <result property="state" column="state" jdbcType="TINYINT"/>
+            <result property="remark" column="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        pk_user_id,uk_user_nickname,user_password,
+        user_name,sex,age,
+        phone,birthday,picture,
+        create_time,update_time,address,
+        experience,state,remark
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from pet_user
+        where  pk_user_id = #{pkUserId,jdbcType=INTEGER} 
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from pet_user
+        where  pk_user_id = #{pkUserId,jdbcType=INTEGER} 
+    </delete>
+    <insert id="insert" keyColumn="pk_user_id" keyProperty="pkUserId" parameterType="com.atyian.pet.admin.pojo.User" useGeneratedKeys="true">
+        insert into pet_user
+        ( pk_user_id,uk_user_nickname,user_password
+        ,user_name,sex,age
+        ,phone,birthday,picture
+        ,create_time,update_time,address
+        ,experience,state,remark
+        )
+        values (#{pkUserId,jdbcType=INTEGER},#{ukUserNickname,jdbcType=VARCHAR},#{userPassword,jdbcType=CHAR}
+        ,#{userName,jdbcType=VARCHAR},#{sex,jdbcType=TINYINT},#{age,jdbcType=TINYINT}
+        ,#{phone,jdbcType=CHAR},#{birthday,jdbcType=DATE},#{picture,jdbcType=VARCHAR}
+        ,#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},#{address,jdbcType=VARCHAR}
+        ,#{experience,jdbcType=TINYINT},#{state,jdbcType=TINYINT},#{remark,jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" keyColumn="pk_user_id" keyProperty="pkUserId" parameterType="com.atyian.pet.admin.pojo.User" useGeneratedKeys="true">
+        insert into pet_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="pkUserId != null">pk_user_id,</if>
+                <if test="ukUserNickname != null">uk_user_nickname,</if>
+                <if test="userPassword != null">user_password,</if>
+                <if test="userName != null">user_name,</if>
+                <if test="sex != null">sex,</if>
+                <if test="age != null">age,</if>
+                <if test="phone != null">phone,</if>
+                <if test="birthday != null">birthday,</if>
+                <if test="picture != null">picture,</if>
+                <if test="createTime != null">create_time,</if>
+                <if test="updateTime != null">update_time,</if>
+                <if test="address != null">address,</if>
+                <if test="experience != null">experience,</if>
+                <if test="state != null">state,</if>
+                <if test="remark != null">remark,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="pkUserId != null">#{pkUserId,jdbcType=INTEGER},</if>
+                <if test="ukUserNickname != null">#{ukUserNickname,jdbcType=VARCHAR},</if>
+                <if test="userPassword != null">#{userPassword,jdbcType=CHAR},</if>
+                <if test="userName != null">#{userName,jdbcType=VARCHAR},</if>
+                <if test="sex != null">#{sex,jdbcType=TINYINT},</if>
+                <if test="age != null">#{age,jdbcType=TINYINT},</if>
+                <if test="phone != null">#{phone,jdbcType=CHAR},</if>
+                <if test="birthday != null">#{birthday,jdbcType=DATE},</if>
+                <if test="picture != null">#{picture,jdbcType=VARCHAR},</if>
+                <if test="createTime != null">#{createTime,jdbcType=TIMESTAMP},</if>
+                <if test="updateTime != null">#{updateTime,jdbcType=TIMESTAMP},</if>
+                <if test="address != null">#{address,jdbcType=VARCHAR},</if>
+                <if test="experience != null">#{experience,jdbcType=TINYINT},</if>
+                <if test="state != null">#{state,jdbcType=TINYINT},</if>
+                <if test="remark != null">#{remark,jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.atyian.pet.admin.pojo.User">
+        update pet_user
+        <set>
+                <if test="ukUserNickname != null">
+                    uk_user_nickname = #{ukUserNickname,jdbcType=VARCHAR},
+                </if>
+                <if test="userPassword != null">
+                    user_password = #{userPassword,jdbcType=CHAR},
+                </if>
+                <if test="userName != null">
+                    user_name = #{userName,jdbcType=VARCHAR},
+                </if>
+                <if test="sex != null">
+                    sex = #{sex,jdbcType=TINYINT},
+                </if>
+                <if test="age != null">
+                    age = #{age,jdbcType=TINYINT},
+                </if>
+                <if test="phone != null">
+                    phone = #{phone,jdbcType=CHAR},
+                </if>
+                <if test="birthday != null">
+                    birthday = #{birthday,jdbcType=DATE},
+                </if>
+                <if test="picture != null">
+                    picture = #{picture,jdbcType=VARCHAR},
+                </if>
+                <if test="createTime != null">
+                    create_time = #{createTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="updateTime != null">
+                    update_time = #{updateTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="address != null">
+                    address = #{address,jdbcType=VARCHAR},
+                </if>
+                <if test="experience != null">
+                    experience = #{experience,jdbcType=TINYINT},
+                </if>
+                <if test="state != null">
+                    state = #{state,jdbcType=TINYINT},
+                </if>
+                <if test="remark != null">
+                    remark = #{remark,jdbcType=VARCHAR},
+                </if>
+        </set>
+        where   pk_user_id = #{pkUserId,jdbcType=INTEGER} 
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.atyian.pet.admin.pojo.User">
+        update pet_user
+        set 
+            uk_user_nickname =  #{ukUserNickname,jdbcType=VARCHAR},
+            user_password =  #{userPassword,jdbcType=CHAR},
+            user_name =  #{userName,jdbcType=VARCHAR},
+            sex =  #{sex,jdbcType=TINYINT},
+            age =  #{age,jdbcType=TINYINT},
+            phone =  #{phone,jdbcType=CHAR},
+            birthday =  #{birthday,jdbcType=DATE},
+            picture =  #{picture,jdbcType=VARCHAR},
+            create_time =  #{createTime,jdbcType=TIMESTAMP},
+            update_time =  #{updateTime,jdbcType=TIMESTAMP},
+            address =  #{address,jdbcType=VARCHAR},
+            experience =  #{experience,jdbcType=TINYINT},
+            state =  #{state,jdbcType=TINYINT},
+            remark =  #{remark,jdbcType=VARCHAR}
+        where   pk_user_id = #{pkUserId,jdbcType=INTEGER} 
+    </update>
+
+    <select id="selectAllUserByCondition" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from pet_user
+        <where>
+            <if test="nickname != null and nickname != ''">
+                uk_user_nickname like concat('%',#{nickname},'%')
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone like concat('%',#{phone},'%')
+            </if>
+        </where>
+    </select>
+
+
+</mapper>
