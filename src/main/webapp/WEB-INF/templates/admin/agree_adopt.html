@@ -30,7 +30,7 @@
                     <div class="col">
                         <div class="card px-2">
                             <div class="card-header bg-white">
-                                <span>同意领养列表管理</span>
+                                <span>同意收养列表管理</span>
                             </div>
                             <div class="card-body">
                                 <form action="#">
@@ -38,9 +38,13 @@
                                         <div class="col">
                                             <div class="form-group">
                                                 <div class="row">
-                                                    <label for="" class="col-form-label pl-3 pr-4">用户名称</label>
-                                                    <input type="text">
-                                                    <button type="button" class="btn btn-primary ml-4">查询</button>
+                                                    <label for="userName" class="col-form-label pl-3 pr-4">用户名称</label>
+                                                    <input type="text" name="userName" id="userName">
+                                                    <label for="petName" class="col-form-label pl-3 pr-4">宠物名称</label>
+                                                    <input type="text" name="petName" id="petName">
+                                                    <label for="createTime" class="col-form-label pl-3 pr-4">时间</label>
+                                                    <input type="text" name="createTime" id="createTime">
+                                                    <button type="button" id="findButton" class="btn btn-primary ml-4">查询</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -75,28 +79,28 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>张三三</td>
-                                            <td>可乐</td>
-                                            <td>2019-08-16</td>
-                                            <td>同意</td>
-                                            <!-- <td>
-                                                <button type="button" class="btn btn-primary">同意</button>
-                                                <button type="button" class="btn btn-danger">不同意</button>
-                                            </td> -->
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>张三三</td>
-                                            <td>可乐</td>
-                                            <td>2019-08-16</td>
-                                            <td>同意</td>
-                                            <!-- <td>
-                                                <button type="button" class="btn btn-primary">同意</button>
-                                                <button type="button" class="btn btn-danger">不同意</button>
-                                            </td> -->
-                                        </tr>
+<!--                                        <tr>-->
+<!--                                            <th scope="row">1</th>-->
+<!--                                            <td>张三三</td>-->
+<!--                                            <td>可乐</td>-->
+<!--                                            <td>2019-08-16</td>-->
+<!--                                            <td>同意</td>-->
+<!--                                            &lt;!&ndash; <td>-->
+<!--                                                <button type="button" class="btn btn-primary">同意</button>-->
+<!--                                                <button type="button" class="btn btn-danger">不同意</button>-->
+<!--                                            </td> &ndash;&gt;-->
+<!--                                        </tr>-->
+<!--                                        <tr>-->
+<!--                                            <th scope="row">1</th>-->
+<!--                                            <td>张三三</td>-->
+<!--                                            <td>可乐</td>-->
+<!--                                            <td>2019-08-16</td>-->
+<!--                                            <td>同意</td>-->
+<!--                                            &lt;!&ndash; <td>-->
+<!--                                                <button type="button" class="btn btn-primary">同意</button>-->
+<!--                                                <button type="button" class="btn btn-danger">不同意</button>-->
+<!--                                            </td> &ndash;&gt;-->
+<!--                                        </tr>-->
                                     </tbody>
                                 </table>
                             </div>
@@ -107,7 +111,7 @@
 
 
                 <!--分页条开始-->
-                <div th:replace="admin/common :: #common_pagination"></div>
+                <div th:replace="admin/common :: #common_paging"></div>
                 <!--分页条结束-->
             </div>
             <!-- 右侧主体结束 -->
@@ -195,5 +199,98 @@
     <div th:replace="admin/common :: #common_script"></div>
 
 </body>
+<script>
+    $(function (){
+        queryPetAdoptByConditionForNum(1,5)
+        //获取查询按钮，点击按条件查询
+        $("#findButton").click(function () {
+            queryPetAdoptByConditionForNum(1, 5);
+        })
+    })
+
+
+    //该方法是用于表格和分页条渲染
+    function queryPetAdoptByConditionForNum(pageNum, pageSize) {
+        //获取参数
+        let userName = $.trim($("#userName").val());
+        let petName = $.trim($("#petName").val());
+        let createTime = $.trim($("#createTime").val());
+        //发送ajax请求
+        $.ajax({
+            url: '[[@{/admin/adopt/list}]]',
+            data: {
+                pageNum: pageNum,
+                pageSize: pageSize,
+                userName:userName,
+                petName: petName,
+                createTime:createTime,
+                state:1
+            },
+            type: 'get',
+            dataType: 'json',
+            success: function (data) {
+                // console.log(data)
+                var htmlStr = "";
+                //无数据
+                if(data.data.total===0){
+                    htmlStr += `<tr>
+                                    <td colspan="5" class="font-weight-bold">无数据</td>
+                                </tr>`
+                    $("tbody").html(htmlStr);
+                    return
+                }
+                if (data.code === "200") {
+                    //遍历
+                    //拼接所有字符串
+
+                    $.each(data.data.list, function (index, obj) {
+                       // $("#countId").val(data.data.total)
+                        htmlStr += `<tr>
+                            <th scope="row">${obj.pkAdoptId}</th>
+                            <td>${obj.userName}</td>
+                            <td>${obj.petName}</td>
+                            <td>${obj.createTime}</td>
+                            <td>${obj.state==1?'同意':`${obj.state==2?'审核中':'不同意'}`}</td>
+                        </tr>`
+                    })
+                    //加载到tBody身上
+                    $("tbody").html(htmlStr);
+
+                    //清空查询输入框
+                    $("#userName").val("");
+                    $("#petName").val("")
+                    $("#createTime").val("")
+                    //分页插件
+                    var options = {
+                        currentPage: pageNum,
+                        totalPages: data.data.pages,
+                        numberOfPages:pageSize,
+                        size:"normal",
+                        itemTexts: function (type, page, current) {
+                            switch (type) {
+                                case "first":
+                                    return "首页";
+                                case "prev":
+                                    return "上一页";
+                                case "next":
+                                    return "下一页";
+                                case "last":
+                                    return "末页";
+                                case "page":
+                                    return page;
+                            }
+                        },
+                        onPageClicked: function(e,originalEvent,type,page){
+                            queryPetAdoptByConditionForNum(page,pageSize)
+                        }
+                    }
+                    $('#common_pagination').bootstrapPaginator(options);
+                }else if(data.code === "300"){
+                    alert(data.message)
+                }
+            }
+        })
+    }
+</script>
 
 </html>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atyian.pet.admin.mapper.AdoptMapper">
+
+    <resultMap id="BaseResultMap" type="com.atyian.pet.admin.pojo.Adopt">
+            <id property="pkAdoptId" column="pk_adopt_id" jdbcType="INTEGER"/>
+            <result property="petName" column="pet_name" jdbcType="VARCHAR"/>
+            <result property="petId" column="pet_id" jdbcType="INTEGER"/>
+            <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+            <result property="userId" column="user_id" jdbcType="INTEGER"/>
+            <result property="adminName" column="admin_name" jdbcType="VARCHAR"/>
+            <result property="adminId" column="admin_id" jdbcType="INTEGER"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="state" column="state" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        pk_adopt_id,pet_name,pet_id,
+        user_name,user_id,admin_name,
+        admin_id,create_time,update_time,
+        state
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from pet_adopt
+        where  pk_adopt_id = #{pkAdoptId,jdbcType=INTEGER} 
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from pet_adopt
+        where  pk_adopt_id = #{pkAdoptId,jdbcType=INTEGER} 
+    </delete>
+    <insert id="insert" keyColumn="pk_adopt_id" keyProperty="pkAdoptId" parameterType="com.atyian.pet.admin.pojo.Adopt" useGeneratedKeys="true">
+        insert into pet_adopt
+        ( pk_adopt_id,pet_name,pet_id
+        ,user_name,user_id,admin_name
+        ,admin_id,create_time,update_time
+        ,state)
+        values (#{pkAdoptId,jdbcType=INTEGER},#{petName,jdbcType=VARCHAR},#{petId,jdbcType=INTEGER}
+        ,#{userName,jdbcType=VARCHAR},#{userId,jdbcType=INTEGER},#{adminName,jdbcType=VARCHAR}
+        ,#{adminId,jdbcType=INTEGER},#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP}
+        ,#{state,jdbcType=TINYINT})
+    </insert>
+    <insert id="insertSelective" keyColumn="pk_adopt_id" keyProperty="pkAdoptId" parameterType="com.atyian.pet.admin.pojo.Adopt" useGeneratedKeys="true">
+        insert into pet_adopt
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="pkAdoptId != null">pk_adopt_id,</if>
+                <if test="petName != null">pet_name,</if>
+                <if test="petId != null">pet_id,</if>
+                <if test="userName != null">user_name,</if>
+                <if test="userId != null">user_id,</if>
+                <if test="adminName != null">admin_name,</if>
+                <if test="adminId != null">admin_id,</if>
+                <if test="createTime != null">create_time,</if>
+                <if test="updateTime != null">update_time,</if>
+                <if test="state != null">state,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="pkAdoptId != null">#{pkAdoptId,jdbcType=INTEGER},</if>
+                <if test="petName != null">#{petName,jdbcType=VARCHAR},</if>
+                <if test="petId != null">#{petId,jdbcType=INTEGER},</if>
+                <if test="userName != null">#{userName,jdbcType=VARCHAR},</if>
+                <if test="userId != null">#{userId,jdbcType=INTEGER},</if>
+                <if test="adminName != null">#{adminName,jdbcType=VARCHAR},</if>
+                <if test="adminId != null">#{adminId,jdbcType=INTEGER},</if>
+                <if test="createTime != null">#{createTime,jdbcType=TIMESTAMP},</if>
+                <if test="updateTime != null">#{updateTime,jdbcType=TIMESTAMP},</if>
+                <if test="state != null">#{state,jdbcType=TINYINT},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.atyian.pet.admin.pojo.Adopt">
+        update pet_adopt
+        <set>
+                <if test="petName != null">
+                    pet_name = #{petName,jdbcType=VARCHAR},
+                </if>
+                <if test="petId != null">
+                    pet_id = #{petId,jdbcType=INTEGER},
+                </if>
+                <if test="userName != null">
+                    user_name = #{userName,jdbcType=VARCHAR},
+                </if>
+                <if test="userId != null">
+                    user_id = #{userId,jdbcType=INTEGER},
+                </if>
+                <if test="adminName != null">
+                    admin_name = #{adminName,jdbcType=VARCHAR},
+                </if>
+                <if test="adminId != null">
+                    admin_id = #{adminId,jdbcType=INTEGER},
+                </if>
+                <if test="createTime != null">
+                    create_time = #{createTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="updateTime != null">
+                    update_time = #{updateTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="state != null">
+                    state = #{state,jdbcType=TINYINT},
+                </if>
+        </set>
+        where   pk_adopt_id = #{pkAdoptId,jdbcType=INTEGER} 
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.atyian.pet.admin.pojo.Adopt">
+        update pet_adopt
+        set 
+            pet_name =  #{petName,jdbcType=VARCHAR},
+            pet_id =  #{petId,jdbcType=INTEGER},
+            user_name =  #{userName,jdbcType=VARCHAR},
+            user_id =  #{userId,jdbcType=INTEGER},
+            admin_name =  #{adminName,jdbcType=VARCHAR},
+            admin_id =  #{adminId,jdbcType=INTEGER},
+            create_time =  #{createTime,jdbcType=TIMESTAMP},
+            update_time =  #{updateTime,jdbcType=TIMESTAMP},
+            state =  #{state,jdbcType=TINYINT}
+        where   pk_adopt_id = #{pkAdoptId,jdbcType=INTEGER} 
+    </update>
+
+    <select id="selectAdoptByCondition" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include>
+        from pet_adopt
+        <where>
+            <if test="state != null">
+                and  state like concat('%',#{state},'%')
+            </if>
+            <if test="userName != null and userName != ''">
+              and  user_name like concat('%',#{userName},'%')
+            </if>
+            <if test="petName != null and petName != ''">
+                and pet_name like concat('%',#{petName},'%')
+            </if>
+            <if test="createTime != null">
+                and create_time like concat('%',#{createTime},'%')
+            </if>
+        </where>
+    </select>
+</mapper>
