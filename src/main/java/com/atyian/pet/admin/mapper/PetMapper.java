@@ -32,4 +32,6 @@ public interface PetMapper {
      */
      List<Pet> selectPetByCondition(PetPageRequest petPageRequest);
 
+     List<Pet> selectPetByPetName(PetPageRequest petPageRequest);
+
 }

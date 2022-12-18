@@ -480,7 +480,7 @@
                     if (data.code == "200") {
                         queryAdminByConditionForNum($('#common_pagination').bootstrapPaginator('getOption','currentPage'),$('#common_pagination').bootstrapPaginator('getOption','numberOfPages'))
                         //重置表单
-                        $("#editForm")[0].reset();
+                       // $("#editForm")[0].reset();
                         $("#editAdminModal").modal('hide')
                     }else if(data.code === "300"){
                         alert(data.message)

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @author: yianzhou
@@ -72,6 +73,16 @@ public class UserController {
             return CommonResult.success();
         }else{
             return CommonResult.fail("删除失败");
+        }
+    }
+
+    @GetMapping("/userName")
+    public CommonResult userName(String userName){
+        Object user = userService.listUserByUserName(userName);
+        if(user != null){
+            return CommonResult.success(user);
+        }else{
+            return CommonResult.fail("查询失败");
         }
     }
 

@@ -1,7 +1,11 @@
 package com.atyian.pet.admin.service;
 
 import com.atyian.pet.admin.controller.request.CommonPageRequest;
+import com.atyian.pet.admin.controller.request.UserPageRequest;
 import com.atyian.pet.admin.pojo.User;
+import org.springframework.objenesis.ObjenesisHelper;
+
+import java.util.List;
 
 /**
  * @author: yianzhou
@@ -44,4 +48,12 @@ public interface UserService {
      * @return
      */
     int deleteUserByUserId(Long id);
+
+
+    /**
+     * 根据用户的真实姓名查询用户
+     * @param userName
+     * @return
+     */
+    Object listUserByUserName(String userName);
 }

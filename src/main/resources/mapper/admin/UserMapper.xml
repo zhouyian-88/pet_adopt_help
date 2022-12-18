@@ -176,4 +176,14 @@
     </select>
 
 
+    <select id="selectAllUserByUserName" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from pet_user
+        <where>
+            <if test="userName != null and userName != ''">
+                user_name like concat('%',#{userName},'%')
+            </if>
+        </where>
+    </select>
 </mapper>

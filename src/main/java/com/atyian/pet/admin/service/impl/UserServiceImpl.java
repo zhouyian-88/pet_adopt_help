@@ -1,6 +1,7 @@
 package com.atyian.pet.admin.service.impl;
 
 import com.atyian.pet.admin.controller.request.CommonPageRequest;
+import com.atyian.pet.admin.controller.request.UserPageRequest;
 import com.atyian.pet.admin.mapper.UserMapper;
 import com.atyian.pet.admin.pojo.User;
 import com.atyian.pet.admin.service.UserService;
@@ -53,5 +54,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public int deleteUserByUserId(Long id) {
         return userMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public Object listUserByUserName(String userName) {
+        UserPageRequest pageRequest = new UserPageRequest();
+        pageRequest.setUserName(userName);
+        PageHelper.startPage(pageRequest.getPageNum(),pageRequest.getPageSize());
+        List<User> userList = userMapper.selectAllUserByUserName(pageRequest);
+        return new PageInfo<>(userList);
     }
 }

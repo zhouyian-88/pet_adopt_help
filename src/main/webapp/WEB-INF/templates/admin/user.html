@@ -345,8 +345,6 @@
                 alert("地址输入不合法")
                 return
             }
-            //展示图片
-            showUpload("#new_pic")
             // console.log(picture)
             if (typeof picture == "undefined") {
                 alert("请选择图片");
@@ -390,6 +388,8 @@
 
         })
 
+        //展示图片
+        showUpload("#new_pic")
 
 
         //获取查询按钮，点击按条件查询
@@ -493,7 +493,7 @@
                     if (data.code == "200") {
                         queryUserByConditionForNum($('#common_pagination').bootstrapPaginator('getOption','currentPage'),$('#common_pagination').bootstrapPaginator('getOption','numberOfPages'))
                         //重置表单
-                        $("#editForm")[0].reset();
+                        //$("#editForm")[0].reset();
                         $("#editUserModal").modal('hide')
                     }else if(data.code === "300"){
                         alert(data.message)

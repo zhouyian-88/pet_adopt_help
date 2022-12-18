@@ -1,6 +1,7 @@
 package com.atyian.pet.admin.mapper;
 
 import com.atyian.pet.admin.controller.request.CommonPageRequest;
+import com.atyian.pet.admin.controller.request.UserPageRequest;
 import com.atyian.pet.admin.pojo.User;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -33,5 +34,8 @@ public interface UserMapper {
      * @return
      */
     List<User> selectAllUserByCondition(CommonPageRequest commonPageRequest);
+
+
+    List<User> selectAllUserByUserName(UserPageRequest UserPageRequest);
 
 }

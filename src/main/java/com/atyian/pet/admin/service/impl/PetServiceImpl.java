@@ -69,4 +69,13 @@ public class PetServiceImpl implements PetService {
     public int deletePetByPetId(Long petId) {
         return petMapper.deleteByPrimaryKey(petId);
     }
+
+    @Override
+    public Object listPetByPetName(String petName) {
+        PetPageRequest petPageRequest = new PetPageRequest();
+        petPageRequest.setPetName(petName);
+        PageHelper.startPage(petPageRequest.getPageNum(),petPageRequest.getPageSize());
+        List<Pet> petList = petMapper.selectPetByPetName(petPageRequest);
+        return new PageInfo<>(petList);
+    }
 }

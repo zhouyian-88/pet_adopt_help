@@ -88,4 +88,14 @@ public class PetController {
            return CommonResult.fail("删除失败");
        }
    }
+
+   @GetMapping("/petName")
+    public CommonResult petName(String petName){
+       Object pet = petService.listPetByPetName(petName);
+       if(pet != null){
+           return CommonResult.success(pet);
+       }else{
+           return CommonResult.fail("查询失败");
+       }
+   }
 }

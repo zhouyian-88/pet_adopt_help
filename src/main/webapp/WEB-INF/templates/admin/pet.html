@@ -234,8 +234,9 @@
                             <div class="form-group col-md-6">
                                 <label for="editState">状态</label>
                                 <select id="editState" name="state" class="form-control">
-                                    <option value="1">已领养</option>
-                                    <option value="2">未领养</option>
+                                    <option value="1">已收养</option>
+                                    <option value="2">未收养</option>
+                                    <option value="3">收养中</option>
                                 </select>
                             </div>
                         </div>
@@ -320,13 +321,16 @@
             $("#findPetType").modal('show')
         })
 
+        $("#editSearchId").click(function (){
+            $("#findPetType").modal('show')
+        })
         //获取创建按钮，点击弹出模态框
         $("#createButton").click(function () {
             //打开模态框
             $("#savePetModal").modal('show')
         })
         //给宠物类型输入框绑定键盘弹起事件
-        $("#petTypeId").keyup(function (){
+      /*  $("#petTypeId").keyup(function (){
             let petType = $.trim($("#petTypeId").val());
             //发送ajax请求
             $.ajax({
@@ -386,16 +390,17 @@
                 }
             })
 
-        })
+        })*/
 
-        //获取新建按钮,添加用户
+        showPetType("#savePetModal","#inputPetType")
+        showPetType("#editPetModal","#editPetType")
+        //获取新建按钮,添加宠物
         $("#createPet").click(function () {
             //获取数据进行校验
             let petName = $.trim($("#inputPetName").val())
             let age = $.trim($("#inputPetAge").val())
             let remark = $.trim($("#inputRemark").val())
             let picture = $("#new_pic")[0].files[0];
-
             if (petName == "" || petName.length >= 18) {
                 alert("输入不能为空")
                 return
@@ -415,8 +420,6 @@
                 alert("请选择图片");
                 return;
             }
-            //展示图片
-            showUpload("#new_pic")
             //使用jquery获取对象，不能再forData中使用，要使用原生的js来获取
             var formData = new FormData(document.getElementById('createForm'));
             // console.log(formData)
@@ -454,6 +457,8 @@
             })
 
         })
+        //展示图片
+        showUpload("#new_pic")
 
         //获取每个单独的修改按钮
         //点击修改按钮，发送ajax请求
@@ -499,7 +504,7 @@
             //获取数据进行校验
             let petName = $.trim($("#editPetName").val())
             let age = $.trim($("#editPetAge").val())
-            let remark = $.trim($("#editPetRemark").val())
+           // let remark = $.trim($("#editPetRemark").val())
             let picture = $("#edit_pic")[0].files[0];
 
             if (petName == "" || petName.length >= 18) {
@@ -510,10 +515,6 @@
 
             if (!reg_age.test(age)) {
                 alert("年龄输入不合法")
-                return
-            }
-            if (remark == "" || remark.length < 0) {
-                alert("输入不能为空")
                 return
             }
             var formData = new FormData(document.getElementById('editForm'));
@@ -533,7 +534,7 @@
                     if (data.code == "200") {
                         queryPetByConditionForNum($('#common_pagination').bootstrapPaginator('getOption','currentPage'),$('#common_pagination').bootstrapPaginator('getOption','numberOfPages'))
                         //重置表单
-                        $("#editForm")[0].reset();
+                       // $("#editForm")[0].reset();
                         $("#editPetModal").modal('hide')
                     }else if(data.code === "300"){
                         alert(data.message)
@@ -571,6 +572,71 @@
         })
 
     })
+    function showPetType(firstModal,petTypeValue){
+        $("#petTypeId").keyup(function (){
+            let petType = $.trim($("#petTypeId").val());
+            //发送ajax请求
+            $.ajax({
+                url: "[[@{/admin/pet/findPetType}]]",
+                data:{
+                    petType:petType
+                },
+                type: 'get',
+                dataType: 'json',
+                success:function (data){
+                    console.log(data);
+                    var htmlStr = "";
+                    //无数据
+                    if(data.data.total===0){
+                        htmlStr += `<tr>
+                                      <td colspan="11" class="font-weight-bold">无数据</td>
+                                    </tr>`
+                        $("#petTbody").html(htmlStr);
+                        return
+                    }
+                    if(data.code==="200"){
+                        $.each(data.data.list, function (index, obj) {
+                            htmlStr += `
+                             <tr>
+                                <td><input type="radio" id="${obj.petType}" name="petType"/></td>
+                                <td>${obj.petType}</td>
+                            </tr>
+                            `
+                        })
+                        //挂载页面
+                        $("#petTbody").html(htmlStr);
+
+                        //获取input框，点击
+                        $("#petTbody").on('click',"input[type='radio']",function (){
+                            // this.attr('id')
+                            //第一个模态框的input框
+                            $(petTypeValue).val($(this).attr('id'))
+                            $("#petTypeId").val('')
+
+                            $("#findPetType").modal('hide')
+
+                            //模态框关闭移除内容
+                            $("#petTbody tr").remove()
+                            //解决模态框嵌套造成的父模态框滚动条失效
+                            $('#findPetType').on('hidden.bs.modal', function () {
+                                $(firstModal).css('overflow-y','scroll')
+                                //移除页面的滚动条
+                                $('tbody').css({'overflow-y':'scroll'})
+                            });
+                            //关闭第一个模态框后把页面的滚动条加回来
+                            $(firstModal).on('hidden.bs.modal', function () {
+                                $('tbody').css({'overflow-y':'scroll'})
+                            })
+                        })
+                    }else if(data.code === "300"){
+                        alert(data.message)
+                    }
+                }
+            })
+
+        })
+    }
+
 
     function showUpload(pictureId){
         //显示上传文件的图片
@@ -627,7 +693,7 @@
                             <td>${obj.birthday}</td>
                             <td><img class="rounded-circle" style="height: 40px;width: 40px"  src="[[@{/image/show?fileName=}]]${obj.picture}"/></td>
                             <td>${obj.createTime}</td>
-                            <td>${obj.state == 1 ? '已收养' : '未收养'}</td>
+                            <td>${obj.state == 1 ? '已收养' : `${obj.state == 2 ? '未收养':'收养中'}`}</td>
                             <td>
                                 <button type="button" class="btn btn-primary" name="editButton" data-toggle="modal" id="${obj.pkPetId}">修改
                                 </button>

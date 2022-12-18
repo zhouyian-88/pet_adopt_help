@@ -38,9 +38,13 @@
                                         <div class="col">
                                             <div class="form-group">
                                                 <div class="row">
-                                                    <label for="" class="col-form-label pl-3 pr-4">时间</label>
-                                                    <input type="text">
-                                                    <button type="button" class="btn btn-primary ml-4">查询</button>
+                                                    <label for="userName" class="col-form-label pl-3 pr-4">用户名称</label>
+                                                    <input type="text" name="userName" id="userName">
+                                                    <label for="petName" class="col-form-label pl-3 pr-4">宠物名称</label>
+                                                    <input type="text" name="petName" id="petName">
+                                                    <label for="createTime" class="col-form-label pl-3 pr-4">时间</label>
+                                                    <input type="text" name="createTime" id="createTime">
+                                                    <button type="button" id="findButton" class="btn btn-primary ml-4">查询</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -54,11 +58,10 @@
 
                 <!-- 右侧表格开始 -->
                 <div class="row m-3">
-
                     <div class="col">
                         <div class="card">
                             <div class="card-header bg-white">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#saveAdminModal">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" id="createButton">
                                     新增
                                   </button>
                             </div>
@@ -74,29 +77,29 @@
                                             <th scope="col">操作</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>张三三</td>
-                                            <td>可乐</td>
-                                            <td>2019-08-16</td>
-                                            <td>还在审核</td>
-                                            <td>
-                                                <button type="button" class="btn btn-primary">同意</button>
-                                                <button type="button" class="btn btn-danger">不同意</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>张三三</td>
-                                            <td>可乐</td>
-                                            <td>2019-08-16</td>
-                                            <td>还在审核</td>
-                                            <td>
-                                                <button type="button" class="btn btn-primary">同意</button>
-                                                <button type="button" class="btn btn-danger">不同意</button>
-                                            </td>
-                                        </tr>
+                                    <tbody id="tbody">
+<!--                                        <tr>-->
+<!--                                            <th scope="row">1</th>-->
+<!--                                            <td>张三三</td>-->
+<!--                                            <td>可乐</td>-->
+<!--                                            <td>2019-08-16</td>-->
+<!--                                            <td>还在审核</td>-->
+<!--                                            <td>-->
+<!--                                                <button type="button" class="btn btn-primary">同意</button>-->
+<!--                                                <button type="button" class="btn btn-danger">不同意</button>-->
+<!--                                            </td>-->
+<!--                                        </tr>-->
+<!--                                        <tr>-->
+<!--                                            <th scope="row">1</th>-->
+<!--                                            <td>张三三</td>-->
+<!--                                            <td>可乐</td>-->
+<!--                                            <td>2019-08-16</td>-->
+<!--                                            <td>还在审核</td>-->
+<!--                                            <td>-->
+<!--                                                <button type="button" class="btn btn-primary">同意</button>-->
+<!--                                                <button type="button" class="btn btn-danger">不同意</button>-->
+<!--                                            </td>-->
+<!--                                        </tr>-->
                                     </tbody>
                                 </table>
                             </div>
@@ -104,10 +107,8 @@
                     </div>
                 </div>
                 <!-- 右侧表格结束 -->
-
-
                 <!--分页条开始-->
-                <div th:replace="admin/common :: #common_pagination"></div>
+                <div th:replace="admin/common :: #common_paging"></div>
                 <!--分页条结束-->
             </div>
             <!-- 右侧主体结束 -->
@@ -115,85 +116,616 @@
     </div>
 
 
-    <!-- 新增用户Modal框 -->
-    <div class="modal fade" id="saveAdminModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- 新增宠物收养Modal框 -->
+    <div class="modal fade" id="savePetAdoptModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">新建用户信息</h5>
-
+                    <h5 class="modal-title" id="exampleModalLabel">新建宠物收养信息</h5>
                 </div>
+                <input id="countId" type="hidden">
                 <div class="modal-body">
-                    <form>
+                    <form id="createForm">
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="inputNickname">账号</label>
-                                <input type="text" class="form-control" id="inputNickname">
+                                <label for="inputUserName">用户名 <i class="bi bi-search" id="searchUserName"></i></label>
+                                <input type="text" name="userName" readonly class="form-control" id="inputUserName">
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="inputPassword">密码</label>
-                                <input type="password" class="form-control" id="inputPassword">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="inputName">真实姓名</label>
-                                <input type="text" class="form-control" id="inputName">
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="inputSex">性别</label>
-                                <input type="text" class="form-control" id="inputSex">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="inputAge">年龄</label>
-                                <input type="text" class="form-control" id="inputAge">
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="inputPhone">联系方式</label>
-                                <input type="text" class="form-control" id="inputPhone">
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="inputBirthday">生日</label>
-                                <input type="date" class="form-control" id="inputBirthday">
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="inputRemark">备注</label>
-                                <input type="text" class="form-control" id="inputRemark">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputAddress">地址</label>
-                            <input type="text" class="form-control" id="inputAddress" placeholder="">
-                        </div>
-                        <div class="form-group">
-                            <label for="new_pic" class="col-sm-2 control-label">
-                                头像
-                            </label>
-                            <div class="col-sm-4">
-                                <img src="#" id="new_pic" alt="" width="70px" height="100px">
-                                <input type="file" id="pic" class="form-control" value="上传文件" name="file">
+                                <label for="inputPetName">宠物名 <i class="bi bi-search" id="searchPetName"></i></label>
+                                <input type="text" name="petName" readonly class="form-control" id="inputPetName">
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer ">
-                    <button type="button " class="btn btn-secondary " data-dismiss="modal">Close</button>
-                    <button type="button " class="btn btn-primary ">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="creatAdopt">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 修改宠物收养Modal框 -->
+    <div class="modal fade" id="editPetAdoptModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">新建宠物收养信息</h5>
+                </div>
+                <div class="modal-body">
+                    <form id="editForm">
+                        <input name="pkAdoptId" id="editId" type="hidden">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="editUserName">用户名 <i class="bi bi-search" id="editSearchUserName"></i></label>
+                                <input type="text" name="userName" readonly class="form-control" id="editUserName">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputPetName">宠物名 <i class="bi bi-search" id="editSearchPetName"></i></label>
+                                <input type="text" name="petName" readonly class="form-control" id="editPetName">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer ">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="editAdoptModal">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--  查找用户模态框  -->
+    <div class="modal fade" id="findUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="userModalLabel">用户信息</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="user" placeholder="请输入真实的用户名名称，支持模糊查询">
+                        </div>
+                    </form>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">ID</th>
+                            <th scope="col">账号名</th>
+                            <th scope="col">真实姓名</th>
+                        </tr>
+                        </thead>
+                        <tbody id="userTbody">
+                        <!-- <tr>
+                             <td><input type="radio" name="petType"/></td>
+                             <td>拉布拉多</td>
+                         </tr>-->
+                        <tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--  查找宠物模态框  -->
+    <div class="modal fade" id="findPetModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="petModalLabel">宠物信息</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="pet" placeholder="请输入宠物姓名，支持模糊查询">
+                        </div>
+                    </form>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">ID</th>
+                            <th scope="col">宠物名</th>
+                            <th scope="col">宠物类型</th>
+                        </tr>
+                        </thead>
+                        <tbody id="petTbody">
+                        <!-- <tr>
+                             <td><input type="radio" name="petType"/></td>
+                             <td>拉布拉多</td>
+                         </tr>-->
+                        <tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
 
 
-
     <!-- 引入js文件 -->
     <div th:replace="admin/common :: #common_script"></div>
 
 </body>
+
+<script>
+    $(function (){
+        queryPetAdoptByConditionForNum(1,5)
+        //获取查询按钮，点击按条件查询
+        $("#findButton").click(function () {
+            queryPetAdoptByConditionForNum(1, 5);
+        })
+        //获取创建按钮，点击弹出模态框
+        $("#createButton").click(function () {
+            //打开模态框
+            $("#savePetAdoptModal").modal('show')
+        })
+
+        //给“search"图标绑定一个点击事件   创建
+        $("#searchUserName").click(function (){
+            $("#findUserModal").modal('show')
+        })
+        $("#searchPetName").click(function (){
+            $("#findPetModal").modal('show')
+        })
+
+        //给userModal的userinput框绑定键盘弹起事件
+        showUser("#savePetAdoptModal","#inputUserName")
+        //petModal input 框绑定键盘弹起事件
+        showPet("#savePetAdoptModal","#inputPetName")
+
+        //获取新建按钮,添加收养信息
+        $("#creatAdopt").click(function () {
+            //获取数据进行校验
+            let userName = $("#inputUserName").val()
+            let userId = $("#inputUserName").attr('name')
+            let petName = $("#inputPetName").val()
+            let petId = $("#inputPetName").attr('name')
+            //发送ajax请求
+            $.ajax({
+                url: '[[@{/admin/adopt/create}]]',
+                data: {
+                    userName:userName,
+                    userId:userId,
+                    petName:petName,
+                    petId:petId
+                },
+                type: 'post',
+                dataType: 'JSON',
+                success: function (data) {
+                    //console.log(data)
+                    if (data.code === "200") {
+                        //刷新页面
+                        var total = $("#countId").val();
+                        if(total%5===0){
+                            queryPetAdoptByConditionForNum($('#common_pagination').bootstrapPaginator('getOption','totalPages')+1,$('#common_pagination').bootstrapPaginator('getOption','numberOfPages'))
+                        }else{
+                            queryPetAdoptByConditionForNum($('#common_pagination').bootstrapPaginator('getOption','totalPages'),$('#common_pagination').bootstrapPaginator('getOption','numberOfPages'))
+                        }
+                        //清空表单内容
+                        $("#createForm")[0].reset();
+                        //关闭模态框
+                        $("#savePetAdoptModal").modal('hide')
+                    }else if(data.code === "300"){
+                        alert(data.message)
+                    }
+
+                }
+
+            })
+
+        })
+
+        //获取每个单独的修改按钮
+        //点击修改按钮，发送ajax请求
+        $("#tbody").on('click',"button[name=editButton]",function(){
+            let id = $(this).attr('id')
+
+            //弹出模态框
+            $.ajax({
+                url:'[[@{/admin/adopt/query}]]',
+                data:{
+                    id:id
+                },
+                type:'get',
+                dataType:'json',
+                success:function (data){
+                    // console.log(data)
+                    if(data.code=="200"){
+                        let result = data.data;
+                        $('#editId').val(id)
+                        $('#editUserName').val(result.userName);
+                        $('#editUserName').attr('name',result.userId)
+                        $('#editPetName').val(result.petName)
+                        $('#editPetName').attr('name',result.petId)
+                        //打开模态框
+                        $("#editPetAdoptModal").modal('show')
+                    }else if(data.code === "300"){
+                        alert(data.message)
+                    }
+                }
+            })
+
+        })
+
+
+        //给“search"图标绑定一个点击事件   创建
+        $("#editSearchUserName").click(function (){
+            $("#findUserModal").modal('show')
+        })
+        $("#editSearchPetName").click(function (){
+            $("#findPetModal").modal('show')
+        })
+
+        //给userModal的userinput框绑定键盘弹起事件
+        showUser("#editPetAdoptModal","#editUserName")
+        //petModal input 框绑定键盘弹起事件
+        showPet("#editPetAdoptModal","#editPetName")
+
+        //模态框中的修改按钮，进行修改
+        $("#editAdoptModal").click(function () {
+          let pkAdoptId =  $('#editId').val()
+           let userName = $('#editUserName').val();
+           let userId = $('#editUserName').attr('name');
+           let petName =  $('#editPetName').val();
+           let petId =  $('#editPetName').attr('name');
+
+            //发送ajax请求
+            $.ajax({
+                url: '/pet/admin/adopt/update',
+                data:{
+                    pkAdoptId:pkAdoptId,
+                    userName:userName,
+                    userId:userId,
+                    petName:petName,
+                    petId:petId
+                },
+                type: 'post',
+                dataType: 'JSON',
+                success: function (data) {
+                    //  console.log(data)
+                    if (data.code == "200") {
+                        queryPetAdoptByConditionForNum($('#common_pagination').bootstrapPaginator('getOption','currentPage'),$('#common_pagination').bootstrapPaginator('getOption','numberOfPages'))
+                        //重置表单
+                        // $("#editForm")[0].reset();
+                        $("#editPetAdoptModal").modal('hide')
+                    }else if(data.code === "300"){
+                        alert(data.message)
+                    }
+
+                }
+
+            })
+
+        })
+
+        //获取到删除按钮
+        $("#tbody").on('click',"button[name=deleteButton]",function (){
+            //得到id
+            let id = $(this).attr('id');
+            if(!confirm("确认要删除吗？")){
+                return
+            }
+            //发送ajax请求
+            $.ajax({
+                url:'/pet/admin/adopt/delete',
+                data:{id:id},
+                type:'get',
+                dataType:'json',
+                success:function(data){
+                    if(data.code==="200"){
+                        //刷新页面
+                        queryPetAdoptByConditionForNum($('#common_pagination').bootstrapPaginator('getOption','currentPage'),$('#common_pagination').bootstrapPaginator('getOption','numberOfPages'))
+                    }else if(data.code === "300"){
+                        alert(data.message)
+                    }
+                }
+
+            })
+        })
+
+
+        //获取到同意按钮
+        $("#tbody").on('click',"button[name=agreeButton]",function (){
+            //得到id
+            let id = $(this).attr('id');
+            //发送ajax请求
+            $.ajax({
+                url:'/pet/admin/adopt/agreeAndDisagree',
+                data:{id:id,sign:1},
+                type:'post',
+                dataType:'json',
+                success:function(data){
+                    if(data.code==="200"){
+                        //刷新页面
+                        queryPetAdoptByConditionForNum($('#common_pagination').bootstrapPaginator('getOption','currentPage'),$('#common_pagination').bootstrapPaginator('getOption','numberOfPages'))
+                    }else if(data.code === "300"){
+                        alert(data.message)
+                    }
+                }
+
+            })
+        })
+
+
+        //获取到不同意按钮
+        $("#tbody").on('click',"button[name=disagreeButton]",function (){
+            //得到id
+            let id = $(this).attr('id');
+            //发送ajax请求
+            $.ajax({
+                url:'/pet/admin/adopt/agreeAndDisagree',
+                data:{id:id,sign:2},
+                type:'post',
+                dataType:'json',
+                success:function(data){
+                    if(data.code==="200"){
+                        //刷新页面
+                        queryPetAdoptByConditionForNum($('#common_pagination').bootstrapPaginator('getOption','currentPage'),$('#common_pagination').bootstrapPaginator('getOption','numberOfPages'))
+                    }else if(data.code === "300"){
+                        alert(data.message)
+                    }
+                }
+
+            })
+        })
+
+    })
+
+    function showUser(firstModal,firstInputValue){
+        $("#user").keyup(function (){
+            let userName = $.trim($("#user").val());
+            //发送ajax请求
+            $.ajax({
+                url: "[[@{/admin/user/userName}]]",
+                data:{
+                    userName:userName
+                },
+                type: 'get',
+                dataType: 'json',
+                success:function (data){
+                    console.log(data);
+                    var htmlStr = "";
+                    //无数据
+                    if(data.data.total===0){
+                        htmlStr += `<tr>
+                                      <td colspan="4" class="font-weight-bold">无数据</td>
+                                    </tr>`
+                        $("#userTbody").html(htmlStr);
+                        return
+                    }
+                    if(data.code==="200"){
+                        $.each(data.data.list, function (index, obj) {
+                            htmlStr += `
+                             <tr>
+                                <td><input type="radio" id="${obj.pkUserId}" name="${obj.userName}"/></td>
+                                <td>${obj.pkUserId}</td>
+                                <td>${obj.ukUserNickname}</td>
+                                <td>${obj.userName}</td>
+                            </tr>
+                            `
+                        })
+                        //挂载页面
+                        $("#userTbody").html(htmlStr);
+
+                        //获取input框，点击
+                        $("#userTbody").on('click',"input[type='radio']",function (){
+                            let id = $(this).attr('id')
+                            $(firstInputValue).val($(this).attr('name'))
+                            $(firstInputValue).attr('name',id)
+                            //第一个模态框的输入框
+                            $("#user").val('')
+                            //第二个模态框
+                            $("#findUserModal").modal('hide')
+
+                            //模态框关闭移除内容
+                            $("#userTbody tr").remove()
+                            //解决模态框嵌套造成的父模态框滚动条失效
+                            $('#findUserModal').on('hidden.bs.modal', function () {
+                                $(firstModal).css('overflow-y','scroll')
+                                //移除页面的滚动条
+                                $('tbody').css({'overflow-y':'scroll'})
+                            });
+                            //关闭第一个模态框后把页面的滚动条加回来
+                            $(firstModal).on('hidden.bs.modal', function () {
+                                $('tbody').css({'overflow-y':'scroll'})
+                            })
+                        })
+                    }else if(data.code === "300"){
+                        alert(data.message)
+                    }
+                }
+            })
+
+        })
+    }
+
+    function showPet(firstModal,firstInputValue){
+        //第一个模态框的input框
+        $("#pet").keyup(function (){
+            let petName = $.trim($("#pet").val());
+            //发送ajax请求
+            $.ajax({
+                url: "[[@{/admin/pet/petName}]]",
+                data:{
+                    petName:petName
+                },
+                type: 'get',
+                dataType: 'json',
+                success:function (data){
+                    console.log(data);
+                    var htmlStr = "";
+                    //无数据
+                    if(data.data.total===0){
+                        htmlStr += `<tr>
+                                      <td colspan="4" class="font-weight-bold">无数据</td>
+                                    </tr>`
+                        $("#petTbody").html(htmlStr);
+                        return
+                    }
+                    if(data.code==="200"){
+                        $.each(data.data.list, function (index, obj) {
+                            htmlStr += `
+                             <tr>
+                                <td><input type="radio" id="${obj.pkPetId}" name="${obj.petName}"/></td>
+                                <td>${obj.pkPetId}</td>
+                                <td>${obj.petName}</td>
+                                <td>${obj.petType}</td>
+                            </tr>
+                            `
+                        })
+                        //挂载页面
+                        $("#petTbody").html(htmlStr);
+
+                        //获取input框，点击
+                        $("#petTbody").on('click',"input[type='radio']",function (){
+                            let id = $(this).attr('id')
+                            $(firstInputValue).val($(this).attr('name'))
+                            $(firstInputValue).attr('name',id)
+                            //第一个模态框的输入框
+                            $("#pet").val('')
+                            //第二个模态框
+                            $("#findPetModal").modal('hide')
+
+                            //模态框关闭移除内容
+                            $("#petTbody tr").remove()
+                            //解决模态框嵌套造成的父模态框滚动条失效
+                            $('#findPetModal').on('hidden.bs.modal', function () {
+                                $(firstModal).css('overflow-y','scroll')
+                                //移除页面的滚动条
+                                $('tbody').css({'overflow-y':'scroll'})
+                            });
+                            //关闭第一个模态框后把页面的滚动条加回来
+                            $(firstModal).on('hidden.bs.modal', function () {
+                                $('tbody').css({'overflow-y':'scroll'})
+                            })
+                        })
+                    }else if(data.code === "300"){
+                        alert(data.message)
+                    }
+                }
+            })
+
+        })
+    }
+
+    //该方法是用于表格和分页条渲染
+    function queryPetAdoptByConditionForNum(pageNum, pageSize) {
+        //获取参数
+        let userName = $.trim($("#userName").val());
+        let petName = $.trim($("#petName").val());
+        let createTime = $.trim($("#createTime").val());
+        //发送ajax请求
+        $.ajax({
+            url: '[[@{/admin/adopt/list}]]',
+            data: {
+                pageNum: pageNum,
+                pageSize: pageSize,
+                userName:userName,
+                petName: petName,
+                createTime:createTime,
+                state:2
+            },
+            type: 'get',
+            dataType: 'json',
+            success: function (data) {
+                // console.log(data)
+                var htmlStr = "";
+                //无数据
+                if(data.data.total===0){
+                    htmlStr += `<tr>
+                                    <td colspan="6" class="font-weight-bold">无数据</td>
+                                </tr>`
+                    $("#tbody").html(htmlStr);
+                    return
+                }
+                if (data.code === "200") {
+                    //遍历
+                    //拼接所有字符串
+
+                  $.each(data.data.list, function (index, obj) {
+                        $("#countId").val(data.data.total)
+                        htmlStr += `<tr>
+                            <th scope="row">${obj.pkAdoptId}</th>
+                            <td>${obj.userName}</td>
+                            <td>${obj.petName}</td>
+                            <td>${obj.createTime}</td>
+                            <td>${obj.state==1?'审核已通过':`${obj.state==2?'审核中':'审核未通过'}`}</td>
+                            <td>
+                              <button type="button" class="btn btn-primary" name="agreeButton" data-toggle="modal" id="${obj.pkAdoptId}">同意</button>
+                                <button type="button" class="btn btn-danger" name="disagreeButton" id="${obj.pkAdoptId}">不同意</button>
+                                <button type="button" class="btn btn-primary" name="editButton" data-toggle="modal" id="${obj.pkAdoptId}">修改</button>
+                                <button type="button" class="btn btn-danger" name="deleteButton" id="${obj.pkAdoptId}">删除</button>
+                            </td>
+                        </tr>`
+                    })
+                    //加载到tBody身上
+                    $("#tbody").html(htmlStr);
+
+                    //清空查询输入框
+                    $("#userName").val("");
+                    $("#petName").val("")
+                    $("#createTime").val("")
+                    //分页插件
+                    var options = {
+                        currentPage: pageNum,
+                        totalPages: data.data.pages,
+                        numberOfPages:pageSize,
+                        size:"normal",
+                        itemTexts: function (type, page, current) {
+                            switch (type) {
+                                case "first":
+                                    return "首页";
+                                case "prev":
+                                    return "上一页";
+                                case "next":
+                                    return "下一页";
+                                case "last":
+                                    return "末页";
+                                case "page":
+                                    return page;
+                            }
+                        },
+                        onPageClicked: function(e,originalEvent,type,page){
+                            queryPetAdoptByConditionForNum(page,pageSize)
+                        }
+                    }
+                    $('#common_pagination').bootstrapPaginator(options);
+                }else if(data.code === "300"){
+                    alert(data.message)
+                }
+            }
+        })
+    }
+
+    // //日期格式化
+    // function getMyDate(str){
+    //     var oDate = new Date(str),
+    //         oYear = oDate.getFullYear(),
+    //         oMonth = oDate.getMonth()+1,
+    //         oDay = oDate.getDate(),
+    //         oHour = oDate.getHours(),
+    //         oMin = oDate.getMinutes(),
+    //         oSen = oDate.getSeconds(),
+    //         // oTime = oYear +'-'+ getzf(oMonth) +'-'+ getzf(oDay) +' '+ getzf(oHour) +':'+ getzf(oMin) +':'+getzf(oSen);
+    //         oTime = oYear +'-'+ getzf(oMonth) +'-'+ getzf(oDay);//最后拼接时间
+    //     return oTime;
+    // };
+    // //补0操作
+    // function getzf(num){
+    //     if(parseInt(num) < 10){
+    //         num = '0'+num;
+    //     }
+    //     return num;
+    // }
+</script>
 
 </html>

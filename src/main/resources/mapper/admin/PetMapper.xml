@@ -140,4 +140,15 @@
             </if>
         </where>
     </select>
+
+
+    <select id="selectPetByPetName" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include> from pet_pet
+        <where>
+            state = 2
+            <if test="petName !=null and petName != ''">
+               and  pet_name like  concat('%',#{petName},'%')
+            </if>
+        </where>
+    </select>
 </mapper>

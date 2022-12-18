@@ -10,6 +10,6 @@ import lombok.Data;
  */
 @Data
 public class BaseRequest {
-    private Integer pageNum;//页码为1
-    private Integer pageSize;//页码大小
+    private Integer pageNum = 1;//页码为1
+    private Integer pageSize = 5;//页码大小
 }

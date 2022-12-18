@@ -24,4 +24,6 @@ public interface PetService {
     Pet getPetByPetId(Long petId);
 
     int deletePetByPetId(Long petId);
+
+    Object listPetByPetName(String petName);
 }
